@@ -13,24 +13,29 @@ namespace EveryBook.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
-        
-        [Required]
+
+        [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public string Author { get; set; }
 
         [Required]
+        [DefaultValue(0)]
         public float OriginalPrice { get; set; }
 
+        [Required]
+        [DefaultValue(0)]
         public float Price { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public string Description { get; set; }
 
         [DisplayName("Available Quantity")]
+        [DefaultValue(0)]
         public int AvailableQuantity { get; set; } = 1;
 
+        [DisplayName("Genre")]
         [ForeignKey("Genre")]
         public long GenreId { get; set; }
 

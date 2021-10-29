@@ -13,10 +13,10 @@ namespace EveryBook.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public string Title { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false)]
         public string Description { get; set; }
 
         [ForeignKey("User")]

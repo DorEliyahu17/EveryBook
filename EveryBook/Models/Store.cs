@@ -15,7 +15,9 @@ namespace EveryBook.Models
 
         [ForeignKey("Location")]
         public long LocationId { get; set; }
+
         public virtual Location Location { get; set; }
+
         public virtual ICollection<Book> Books { get; set; }
     }
 }

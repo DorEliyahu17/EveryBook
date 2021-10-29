@@ -20,7 +20,8 @@ namespace EveryBook.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return Error();
+            //return View();
         }
 
         public IActionResult Privacy()

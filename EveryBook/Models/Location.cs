@@ -13,6 +13,7 @@ namespace EveryBook.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
         public string Address { get; set; }
     }
 }

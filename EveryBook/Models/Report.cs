@@ -13,12 +13,16 @@ namespace EveryBook.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
+        [Required]
         public DateTime CreateTime { get; set; }
 
+        [Required]
         public DateTime StartPeriod { get; set; }
 
+        [Required]
         public DateTime EndPeriod { get; set; }
 
+        [Required]
         public float Total { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using EveryBook.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EveryBook.Migrations
 {
     [DbContext(typeof(EveryBookContext))]
-    partial class EveryBookContextModelSnapshot : ModelSnapshot
+    [Migration("20211029134002_added-default-value")]
+    partial class addeddefaultvalue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,15 +146,10 @@ namespace EveryBook.Migrations
                     b.Property<DateTime>("PurchaseTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("StoreId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StoreId");
 
                     b.HasIndex("UserId");
 
@@ -460,17 +457,9 @@ namespace EveryBook.Migrations
 
             modelBuilder.Entity("EveryBook.Models.Order", b =>
                 {
-                    b.HasOne("EveryBook.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EveryBook.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Store");
 
                     b.Navigation("User");
                 });

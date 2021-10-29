@@ -21,5 +21,10 @@ namespace EveryBook.Models
         public string UserId { get; set; }
 
         public virtual User User { get; set; }
+
+        [ForeignKey("Store")]
+        public long StoreId { get; set; }
+
+        public virtual Store Store { get; set; }
     }
 }
