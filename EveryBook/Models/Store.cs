@@ -16,9 +16,6 @@ namespace EveryBook.Models
         [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
-        public string Description { get; set; }
-
         [ForeignKey("Location")]
         public long LocationId { get; set; }
 
