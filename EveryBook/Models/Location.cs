@@ -15,5 +15,11 @@ namespace EveryBook.Models
 
         [Required(AllowEmptyStrings = false)]
         public string Address { get; set; }
+
+        [Required]
+        public double Latitude { get; set; }
+
+        [Required]
+        public double Longitude { get; set; }
     }
 }

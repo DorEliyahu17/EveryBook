@@ -1,0 +1,121 @@
+﻿
+@model IEnumerable<EveryBook.Models.Store>
+
+@{
+    ViewData["Title"] = "About";
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Google Maps example</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbqSMqV3XQVX3Vrb1ciM9qVk6MBKGDsbs" type="text/javascript"></script>
+    <style type="text/css">
+
+        #map_canvas {
+            height: 400px;
+        }
+    </style>
+    <link rel="stylesheet" href="~/css/About.css" />
+</head>
+
+<script type='text/javascript'>
+
+    function loadMapScenario() {
+        var map = new Microsoft.Maps.Map(document.getElementById('storeLocations'), {
+            credentials: 'AsQDLk8Jk24lR_LG-TtW53eq8rKr4-Qu0VkyePkruOb4TLBduACOgL3qnCdGGGWC',
+        });
+        map.setView({
+            mapTypeId: Microsoft.Maps.MapTypeId.road,
+            center: new Microsoft.Maps.Location(32.100000, 34.788052),
+            zoom: 10
+        });
+
+        // Create the infobox for the pushpin
+        var infobox = null;
+
+        //declare addMarker function
+        function addMarker(latitude, longitude, title, description, pid)
+        {
+            var marker = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude), { color: 'green' });
+
+            infobox = new Microsoft.Maps.Infobox(marker.getLocation(), {
+                visible : false
+            });
+
+            marker.metadata = {
+                id: pid,
+                title: title,
+                description: description
+            };
+
+            Microsoft.Maps.Events.addHandler(marker, 'mouseout', hideInfobox);
+            Microsoft.Maps.Events.addHandler(marker, 'mouseover', showInfobox);
+
+            infobox.setMap(map);
+            map.entities.push(marker);
+            marker.setOptions({ enableHoverStyle: true });
+        };
+
+        function showInfobox(e) {
+            if (e.target.metadata) {
+                infobox.setOptions({
+                    location: e.target.getLocation(),
+                    title: e.target.metadata.title,
+                    description: e.target.metadata.description,
+                    visible: true
+                });
+            }
+        }
+
+        function hideInfobox(e) {
+            infobox.setOptions({ visible: false });
+        }
+
+        //add markers to map
+        @if (Model != null)
+        {
+            foreach (var store in Model)
+            {
+                @:addMarker(@store.Location.Latitude, @store.Location.Longitude, '@store.Name', '@store.Description', @store.LocationId);
+            }
+        }
+    }
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>
+
+<div class="row desc" style="padding: 26px 26px 0px 26px; background-color: white; box-shadow: 1px 1px 3px -1px;">
+    <div class="col-lg-5">
+        <h2>EveryBook</h2>
+        <br />
+        <h3 style="font-size: 23px; color: #8a8a8a; position: relative; bottom: 13px;">Buy Your books - The smart way!</h3>
+        <br />
+        <div>Here in EveryBook you can find your favorite books and get some great deals!</div>
+        <br />
+        <div>Feel free to contact us at:</div>
+        <br />
+        <div>everybook@colman.ac.il</div>
+        <br />
+    </div>
+    <div class="col-lg-7 map">
+        <center><div id="storeLocations" style="width:100%; height:330px;"></div></center>
+    </div>
+    <div class="col-lg-12" style="text-align: center; padding: 36px; border-top: 1px solid #EAEAEA; margin-top: 30px;">
+        <h4 class="h3-shadow" style="position: relative; bottom: 16px;">
+            For years you needed to go to a physical store to purchase your copy of your favorite book
+        </h4>
+        <video width="600" controls style="box-shadow: 1px 1px 3px -1px;">
+            <source src="~/choosing-book-on-shelf.mp4" type="video/mp4">
+        </video>
+        <h4 class="h3-shadow" style="position: relative; bottom: 16px; margin-top: 26px;">
+            How about purchasing your copy with a click and getting it right to your house
+        </h4>
+        <video width="600" controls style="box-shadow: 1px 1px 3px -1px;">
+            <source src="~/woman-doing-online-shopping.mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+<br />
