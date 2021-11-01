@@ -23,11 +23,11 @@ namespace EveryBook.Models
         public string ExtendUserId { get; set; }
 
         public virtual ExtendUser ExtendUser { get; set; }
-        /*
-        [ForeignKey("Store")]
-        public long StoreId { get; set; }
 
-        public virtual Store Store { get; set; }
-        */
+        [ForeignKey("DistributionUnit")]
+        [DisplayName("Distribution Unit")]
+        public long DistributionUnitId { get; set; }
+
+        public virtual DistributionUnit DistributionUnit { get; set; }
     }
 }

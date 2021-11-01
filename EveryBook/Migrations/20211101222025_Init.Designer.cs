@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EveryBook.Migrations
 {
     [DbContext(typeof(EveryBookContext))]
-    [Migration("20211101210835_Init")]
+    [Migration("20211101222025_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,9 +131,6 @@ namespace EveryBook.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("DistributionUnitId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -178,8 +175,6 @@ namespace EveryBook.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DistributionUnitId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -237,6 +232,9 @@ namespace EveryBook.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long>("DistributionUnitId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("ExtendUserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -244,6 +242,8 @@ namespace EveryBook.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DistributionUnitId");
 
                     b.HasIndex("ExtendUserId");
 
@@ -455,7 +455,7 @@ namespace EveryBook.Migrations
                     b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("EveryBook.Models.ExtendUser", b =>
+            modelBuilder.Entity("EveryBook.Models.Order", b =>
                 {
                     b.HasOne("EveryBook.Models.DistributionUnit", "DistributionUnit")
                         .WithMany()
@@ -463,14 +463,11 @@ namespace EveryBook.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DistributionUnit");
-                });
-
-            modelBuilder.Entity("EveryBook.Models.Order", b =>
-                {
                     b.HasOne("EveryBook.Models.ExtendUser", "ExtendUser")
                         .WithMany()
                         .HasForeignKey("ExtendUserId");
+
+                    b.Navigation("DistributionUnit");
 
                     b.Navigation("ExtendUser");
                 });

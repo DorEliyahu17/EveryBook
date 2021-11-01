@@ -22,7 +22,7 @@ namespace EveryBook.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var everyBookContext = _context.Order.Include(o => o.ExtendUser);
+            var everyBookContext = _context.Order.Include(o => o.DistributionUnit).Include(o => o.ExtendUser);
             return View(await everyBookContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace EveryBook.Controllers
             }
 
             var order = await _context.Order
+                .Include(o => o.DistributionUnit)
                 .Include(o => o.ExtendUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
@@ -48,7 +49,8 @@ namespace EveryBook.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["DistributionUnitId"] = new SelectList(_context.DistributionUnit, "Id", "Name");
+            ViewData["ExtendUserId"] = new SelectList(_context.ExtendUser, "Id", "Id");
             return View();
         }
 
@@ -57,7 +59,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PurchaseTime,ExtendUserId")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,PurchaseTime,ExtendUserId,DistributionUnitId")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +67,8 @@ namespace EveryBook.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id", order.ExtendUserId);
+            ViewData["DistributionUnitId"] = new SelectList(_context.DistributionUnit, "Id", "Id", order.DistributionUnitId);
+            ViewData["ExtendUserId"] = new SelectList(_context.ExtendUser, "Id", "Id", order.ExtendUserId);
             return View(order);
         }
 
@@ -82,7 +85,8 @@ namespace EveryBook.Controllers
             {
                 return NotFound();
             }
-            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id", order.ExtendUserId);
+            ViewData["DistributionUnitId"] = new SelectList(_context.DistributionUnit, "Id", "Id", order.DistributionUnitId);
+            ViewData["ExtendUserId"] = new SelectList(_context.ExtendUser, "Id", "Id", order.ExtendUserId);
             return View(order);
         }
 
@@ -91,7 +95,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,PurchaseTime,ExtendUserId")] Order order)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,PurchaseTime,ExtendUserId,DistributionUnitId")] Order order)
         {
             if (id != order.Id)
             {
@@ -118,7 +122,8 @@ namespace EveryBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id", order.ExtendUserId);
+            ViewData["DistributionUnitId"] = new SelectList(_context.DistributionUnit, "Id", "Id", order.DistributionUnitId);
+            ViewData["ExtendUserId"] = new SelectList(_context.ExtendUser, "Id", "Id", order.ExtendUserId);
             return View(order);
         }
 
@@ -131,6 +136,7 @@ namespace EveryBook.Controllers
             }
 
             var order = await _context.Order
+                .Include(o => o.DistributionUnit)
                 .Include(o => o.ExtendUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)

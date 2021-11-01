@@ -11,11 +11,5 @@ namespace EveryBook.Models
     public class ExtendUser : IdentityUser
     {
         public string Name { get; set; }
-
-        [ForeignKey("DistributionUnit")]
-        [DisplayName("Favorite Distribution Unit")]
-        public long DistributionUnitId { get; set; }
-
-        public virtual DistributionUnit DistributionUnit { get; set; }
     }
 }

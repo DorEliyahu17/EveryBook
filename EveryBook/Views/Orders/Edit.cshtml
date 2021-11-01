@@ -24,6 +24,11 @@
                 <span asp-validation-for="ExtendUserId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="DistributionUnitId" class="control-label"></label>
+                <select asp-for="DistributionUnitId" class="form-control" asp-items="ViewBag.DistributionUnitId"></select>
+                <span asp-validation-for="DistributionUnitId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
