@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EveryBook.Models.Bug>
+﻿@model IEnumerable<EveryBook.Models.Report>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.CreateTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.StartPeriod)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExtendUser)
+                @Html.DisplayNameFor(model => model.EndPeriod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
             </th>
             <th></th>
         </tr>
@@ -28,13 +31,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.CreateTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.StartPeriod)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ExtendUser.Id)
+                @Html.DisplayFor(modelItem => item.EndPeriod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

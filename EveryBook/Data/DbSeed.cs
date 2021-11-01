@@ -11,6 +11,34 @@ namespace EveryBook.Data
     {
         public static void Seed(EveryBookContext context)
         {
+            var location1 = new Location()
+            {
+                Address = "Golda Meir 13, Holon",
+                Latitude = 32.012156,
+                Longitude = 34.779135
+            };
+
+            var location2 = new Location()
+            {
+                Address = "Menahem Begin Road 132, Tel-Aviv",
+                Latitude = 32.075138,
+                Longitude = 34.791357
+            };
+
+            var location3 = new Location()
+            {
+                Address = "Aba Hillel Silver 301, Ramat Gan",
+                Latitude = 32.098100,
+                Longitude = 34.824953
+            };
+
+            var location4 = new Location()
+            {
+                Address = "Pikus 99, Modiin",
+                Latitude = 31.900113,
+                Longitude = 35.008358
+            };
+
             if (!context.Roles.Any())
             {
                 context.Roles.Add(new IdentityRole("Admin")
@@ -87,56 +115,37 @@ namespace EveryBook.Data
 
             if (!context.Location.Any())
             {
-                context.Location.Add(new Location()
-                {
-                    Address = "Golda Meir 13, Holon",
-                    Latitude = 32.012156,
-                    Longitude = 34.779135
-                });
-                context.Location.Add(new Location()
-                {
-                    Address = "Menahem Begin Road 132, Tel-Aviv",
-                    Latitude = 32.075138,
-                    Longitude = 34.791357
-                });
-                context.Location.Add(new Location()
-                {
-                    Address = "Aba Hillel Silver 301, Ramat Gan",
-                    Latitude = 32.098100,
-                    Longitude = 34.824953
-                });
-                context.Location.Add(new Location()
-                {
-                    Address = "Pikus 99, Modiin",
-                    Latitude = 31.900113,
-                    Longitude = 35.008358
-                });
+
+                context.Location.Add(location1);
+                context.Location.Add(location2);
+                context.Location.Add(location3);
+                context.Location.Add(location4);
             }
 
-            if (!context.Store.Any())
+
+            if (!context.DistributionUnit.Any())
             {
-                context.Store.Add(new Store()
+                context.DistributionUnit.Add(new DistributionUnit()
                 {
                     Name = "Azriei Holon Mall",
-                    LocationId = 1
-                });
-                context.Store.Add(new Store()
+                    Location = location1
+                }); ;
+                context.DistributionUnit.Add(new DistributionUnit()
                 {
                     Name = "Azriei Tower",
-                    LocationId = 2
+                    Location = location2
                 });
-                context.Store.Add(new Store()
+                context.DistributionUnit.Add(new DistributionUnit()
                 {
                     Name = "Ayalon Mall",
-                    LocationId = 3
+                    Location = location3
                 });
-                context.Store.Add(new Store()
+                context.DistributionUnit.Add(new DistributionUnit()
                 {
                     Name = "Azriei Modiin Mall",
-                    LocationId = 4
+                    Location = location4
                 });
             }
-
             context.SaveChanges();
         }
     }

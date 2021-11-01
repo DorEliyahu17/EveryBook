@@ -22,6 +22,7 @@ namespace EveryBook.Models
 
         [Required]
         [DefaultValue(0)]
+        [DisplayName("Original Price")]
         public float OriginalPrice { get; set; }
 
         [Required]

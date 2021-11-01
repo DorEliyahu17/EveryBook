@@ -2,17 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-EveryBook-C7D65744-320F-4F4D-863D-714F8702C6C9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <_WebToolingArtifacts Remove="Properties\serviceDependencies.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Properties\serviceDependencies.json" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />

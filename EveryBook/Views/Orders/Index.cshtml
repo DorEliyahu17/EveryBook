@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EveryBook.Models.Bug>
+﻿@model IEnumerable<EveryBook.Models.Order>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,10 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.PurchaseTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ExtendUser)
@@ -28,10 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.PurchaseTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExtendUser.Id)

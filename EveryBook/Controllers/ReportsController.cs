@@ -10,23 +10,22 @@ using EveryBook.Models;
 
 namespace EveryBook.Controllers
 {
-    public class BugsController : Controller
+    public class ReportsController : Controller
     {
         private readonly EveryBookContext _context;
 
-        public BugsController(EveryBookContext context)
+        public ReportsController(EveryBookContext context)
         {
             _context = context;
         }
 
-        // GET: Bugs
+        // GET: Reports
         public async Task<IActionResult> Index()
         {
-            var everyBookContext = _context.Bug.Include(b => b.ExtendUser);
-            return View(await everyBookContext.ToListAsync());
+            return View(await _context.Report.ToListAsync());
         }
 
-        // GET: Bugs/Details/5
+        // GET: Reports/Details/5
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace EveryBook.Controllers
                 return NotFound();
             }
 
-            var bug = await _context.Bug
-                .Include(b => b.ExtendUser)
+            var report = await _context.Report
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (bug == null)
+            if (report == null)
             {
                 return NotFound();
             }
 
-            return View(bug);
+            return View(report);
         }
 
-        // GET: Bugs/Create
+        // GET: Reports/Create
         public IActionResult Create()
         {
-            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Bugs/Create
+        // POST: Reports/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ExtendUserId")] Bug bug)
+        public async Task<IActionResult> Create([Bind("Id,CreateTime,StartPeriod,EndPeriod,Total")] Report report)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(bug);
+                _context.Add(report);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id", bug.ExtendUserId);
-            return View(bug);
+            return View(report);
         }
 
-        // GET: Bugs/Edit/5
+        // GET: Reports/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace EveryBook.Controllers
                 return NotFound();
             }
 
-            var bug = await _context.Bug.FindAsync(id);
-            if (bug == null)
+            var report = await _context.Report.FindAsync(id);
+            if (report == null)
             {
                 return NotFound();
             }
-            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id", bug.ExtendUserId);
-            return View(bug);
+            return View(report);
         }
 
-        // POST: Bugs/Edit/5
+        // POST: Reports/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Description,ExtendUserId")] Bug bug)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,CreateTime,StartPeriod,EndPeriod,Total")] Report report)
         {
-            if (id != bug.Id)
+            if (id != report.Id)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace EveryBook.Controllers
             {
                 try
                 {
-                    _context.Update(bug);
+                    _context.Update(report);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BugExists(bug.Id))
+                    if (!ReportExists(report.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace EveryBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id", bug.ExtendUserId);
-            return View(bug);
+            return View(report);
         }
 
-        // GET: Bugs/Delete/5
+        // GET: Reports/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -130,31 +124,30 @@ namespace EveryBook.Controllers
                 return NotFound();
             }
 
-            var bug = await _context.Bug
-                .Include(b => b.ExtendUser)
+            var report = await _context.Report
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (bug == null)
+            if (report == null)
             {
                 return NotFound();
             }
 
-            return View(bug);
+            return View(report);
         }
 
-        // POST: Bugs/Delete/5
+        // POST: Reports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var bug = await _context.Bug.FindAsync(id);
-            _context.Bug.Remove(bug);
+            var report = await _context.Report.FindAsync(id);
+            _context.Report.Remove(report);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BugExists(long id)
+        private bool ReportExists(long id)
         {
-            return _context.Bug.Any(e => e.Id == id);
+            return _context.Report.Any(e => e.Id == id);
         }
     }
 }

@@ -8,15 +8,24 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EveryBook.Data
 {
-    public class EveryBookContext : IdentityDbContext
+    public class EveryBookContext : IdentityDbContext<ExtendUser>
     {
         public DbSet<Genre> Genre { get; set; }
+
         public DbSet<Book> Book { get; set; }
+
         public DbSet<Order> Order { get; set; }
+
         public DbSet<Report> Report { get; set; }
+
         public DbSet<Bug> Bug { get; set; }
-        public DbSet<Store> Store { get; set; }
+
         public DbSet<Location> Location { get; set; }
+
+        public DbSet<DistributionUnit> DistributionUnit { get; set; }
+
+        public DbSet<ExtendUser> ExtendUser { get; set; }
+
         public EveryBookContext (DbContextOptions<EveryBookContext> options)
             : base(options)
         {

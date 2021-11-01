@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,12 +15,15 @@ namespace EveryBook.Models
         public long Id { get; set; }
 
         [Required]
+        [DisplayName("Create Time")]
         public DateTime CreateTime { get; set; }
 
         [Required]
+        [DisplayName("Start Period")]
         public DateTime StartPeriod { get; set; }
 
         [Required]
+        [DisplayName("End Period")]
         public DateTime EndPeriod { get; set; }
 
         [Required]

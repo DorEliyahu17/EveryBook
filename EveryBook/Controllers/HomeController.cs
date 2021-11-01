@@ -30,7 +30,7 @@ namespace EveryBook.Controllers
 
         public IActionResult About()
         {
-            IEnumerable<Store> everyBookContext = _context.Store.Include(s => s.Location);
+            IEnumerable<DistributionUnit> everyBookContext = _context.DistributionUnit.Include(s => s.Location);
             /*
             List<Store> model = new List<Store>();
             var locations = new List<Location>()
