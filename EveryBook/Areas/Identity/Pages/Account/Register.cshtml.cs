@@ -62,12 +62,9 @@ namespace EveryBook.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Display(Name = "Distribution Unit")]
-            public long DistributionUnitId { get; set; }
-
-            public virtual DistributionUnit DistributionUnit { get; set; }
+            [Required]
+            public string Name { get; set; }
         }
-
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
@@ -80,7 +77,7 @@ namespace EveryBook.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ExtendUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ExtendUser { UserName = Input.Email, Email = Input.Email, Name = Input.Name };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

@@ -28,7 +28,7 @@ $.get(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=Tel-Aviv`, (d
         prefixString = 'Good Night, '
     }
 
-    $('#greetings').html(`${prefixString}${$('#greetings').html()}`);
+    $('#welcome-message').html(`${prefixString}${$('#welcome-message').html()}`);
 });
 
 function deleteGeneric(name, formSubmit = '') {
