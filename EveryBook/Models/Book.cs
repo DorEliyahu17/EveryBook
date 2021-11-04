@@ -21,11 +21,13 @@ namespace EveryBook.Models
         public string Author { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         [DefaultValue(0)]
         [DisplayName("Original Price")]
         public float OriginalPrice { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1} and grater than the \"Original Price\"")]
         [DefaultValue(0)]
         public float Price { get; set; }
 
@@ -34,6 +36,7 @@ namespace EveryBook.Models
 
         [DisplayName("Available Quantity")]
         [DefaultValue(0)]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         public int AvailableQuantity { get; set; } = 1;
 
         [DisplayName("Genre")]

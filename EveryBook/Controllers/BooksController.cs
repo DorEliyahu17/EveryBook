@@ -70,11 +70,15 @@ namespace EveryBook.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,GenreId")] Book book)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && book.AvailableQuantity > 0 && book.OriginalPrice > 0 && book.Price > book.OriginalPrice)
             {
                 _context.Add(book);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            if (book.Price < book.OriginalPrice)
+            {
+                ModelState.AddModelError(nameof(book.Price), "Price needed to be grater than the \"Original Price\"");
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", book.GenreId);
             return View(book);
