@@ -13,9 +13,10 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="PurchaseTime" class="control-label"></label>
-                <input asp-for="PurchaseTime" class="form-control" />
                 <span asp-validation-for="PurchaseTime" class="text-danger"></span>
+                <br />
+                <label asp-for="PurchaseTime" class="control-label"></label>
+                <input asp-for="PurchaseTime" class="form-control" value="@DateTime.Now" />
             </div>
             <div class="form-group">
                 <label asp-for="ExtendUserId" class="control-label"></label>
