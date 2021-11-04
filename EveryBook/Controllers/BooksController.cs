@@ -25,7 +25,7 @@ namespace EveryBook.Controllers
         {
             IEnumerable<Book> everyBookContext = _context.Book.Include(b => b.Genre);
 
-            if (String.IsNullOrEmpty(bookName))
+            if (!String.IsNullOrEmpty(bookName))
             {
                 everyBookContext = everyBookContext.Where(b => b.Name == bookName).ToList();
             }
