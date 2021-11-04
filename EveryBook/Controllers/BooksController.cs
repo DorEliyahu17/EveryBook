@@ -78,7 +78,7 @@ namespace EveryBook.Controllers
             }
             if (book.Price < book.OriginalPrice)
             {
-                ModelState.AddModelError(nameof(book.Price), "Price needed to be grater than the \"Original Price\"");
+                ModelState.AddModelError(nameof(book.Price), "Price needed to be grater than the \"Original Price\".");
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", book.GenreId);
             return View(book);
