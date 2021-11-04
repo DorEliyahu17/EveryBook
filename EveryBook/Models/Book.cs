@@ -15,6 +15,9 @@ namespace EveryBook.Models
         public long Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
+        public string PictureUrl { get; set; }
+
+        [Required(AllowEmptyStrings = false)]
         public string Name { get; set; }
 
         [Required(AllowEmptyStrings = false)]
