@@ -147,17 +147,29 @@ namespace EveryBook.Data
                 });
             }
 
-            var user = new ExtendUser()
+            var adminUser = new ExtendUser()
             {
                 Name = "Dor Eliyahu",
                 Email = "aa@aa.aa",
                 UserName = "aa@aa.aa"
             };
+            if (!context.ExtendUser.Any(u => u.UserName == adminUser.UserName))
+            {
+                userManager.CreateAsync(adminUser, "Aa123456!").Wait();
+                userManager.AddToRoleAsync(adminUser, "Admin").Wait();
+            }
+            
+            var user = new ExtendUser()
+            {
+                Name = "user",
+                Email = "bb@bb.bb",
+                UserName = "bb@bb.bb"
+            };
 
             if (!context.ExtendUser.Any(u => u.UserName == user.UserName))
             {
                 userManager.CreateAsync(user, "Aa123456!").Wait();
-                userManager.AddToRoleAsync(user, "Admin").Wait();
+                userManager.AddToRoleAsync(user, "User").Wait();
             }
             
             context.SaveChanges();
