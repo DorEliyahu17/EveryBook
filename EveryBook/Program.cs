@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using EveryBook.Models;
 
 namespace EveryBook
 {
@@ -22,7 +24,9 @@ namespace EveryBook
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<EveryBookContext>();
-                DbSeed.Seed(context);
+                var userManager = services.GetRequiredService<UserManager<ExtendUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                DbSeed.Seed(context, userManager, roleManager);
             }
 
             host.Run();

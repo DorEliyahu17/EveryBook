@@ -9,7 +9,7 @@ namespace EveryBook.Data
 {
     public class DbSeed
     {
-        public static void Seed(EveryBookContext context)
+        public static void Seed(EveryBookContext context, UserManager<ExtendUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             var location1 = new Location()
             {
@@ -41,16 +41,16 @@ namespace EveryBook.Data
 
             if (!context.Roles.Any())
             {
-                context.Roles.Add(new IdentityRole("Admin")
+                roleManager.CreateAsync(new IdentityRole("Admin")
                 {
                     Id = "1",
                     NormalizedName = "Admin"
-                });
-                context.Roles.Add(new IdentityRole("User")
+                }).Wait();
+                roleManager.CreateAsync(new IdentityRole("User")
                 {
                     Id = "2",
                     NormalizedName = "User"
-                });
+                }).Wait();
             }
 
             if (!context.Genre.Any())
@@ -146,6 +146,20 @@ namespace EveryBook.Data
                     Location = location4
                 });
             }
+
+            var user = new ExtendUser()
+            {
+                Name = "Dor Eliyahu",
+                Email = "aa@aa.aa",
+                UserName = "aa@aa.aa"
+            };
+
+            if (!context.ExtendUser.Any(u => u.UserName == user.UserName))
+            {
+                userManager.CreateAsync(user, "Aa123456!").Wait();
+                userManager.AddToRoleAsync(user, "Admin").Wait();
+            }
+            
             context.SaveChanges();
         }
     }

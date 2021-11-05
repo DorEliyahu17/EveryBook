@@ -35,6 +35,7 @@ namespace EveryBook
 
             services.AddDefaultIdentity<ExtendUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
+                .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<EveryBookContext>();
             services.AddControllersWithViews();
         }

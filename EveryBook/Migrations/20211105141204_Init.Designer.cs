@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EveryBook.Migrations
 {
     [DbContext(typeof(EveryBookContext))]
-    [Migration("20211104230943_added-is-admin-col")]
-    partial class addedisadmincol
+    [Migration("20211105141204_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,10 @@ namespace EveryBook.Migrations
 
                     b.Property<float>("OriginalPrice")
                         .HasColumnType("real");
+
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -137,9 +141,6 @@ namespace EveryBook.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("IsAdmin")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

@@ -11,6 +11,6 @@ namespace EveryBook.Models
     public class ExtendUser : IdentityUser
     {
         public string Name { get; set; }
-        public string IsAdmin { get; set; }
+        //public bool IsAdmin { get; set; }
     }
 }
