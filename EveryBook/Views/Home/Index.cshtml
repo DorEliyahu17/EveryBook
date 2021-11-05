@@ -2,9 +2,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <a class="twitter-timeline" href="https://twitter.com/twitterbooks" data-widget-id="234324234234234" data-screen-name="cshtml" width="350" height="666" data-chrome="noborders"></a>
+<!--<div class="text-center">
+    <h1 class="display-4">Welcome!</h1>
+    <a class="twitter-timeline" href="https://twitter.com/twitterbooks" data-widget-id="234324234234234" data-screen-name="cshtml" width="350" height="350" data-chrome="noborders"></a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div> -->
+<div class="text-center">
+    <h1 class="display-4">Welcome To EveryBook!</h1>
 </div>
+
+<div class="text-left">
+    <h1>Top 5 Selling Books</h1>
+</div>
+
+    <div class="twitterborder">
+        <div class="table">
+            <div class="table-cell">
+                <a class="twitter-timeline" href="https://twitter.com/twitterbooks" data-widget-id="234324234234234" data-screen-name="cshtml" width="350" height="350" data-chrome="noborders"></a>
+
+                <script>
+                    ! function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0],
+                            p = /^http:/.test(d.location) ? 'http' : 'https';
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = p + "://platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");
+                </script>
+            </div>
+        </div>
+    </div>
