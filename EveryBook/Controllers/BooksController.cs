@@ -68,9 +68,9 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,GenreId")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,GenreId")] Book book)
         {
-            if (ModelState.IsValid && book.AvailableQuantity > 0 && book.OriginalPrice > 0 && book.Price > book.OriginalPrice)
+            if (ModelState.IsValid && book.AvailableQuantity > 0 && book.OriginalPrice > 0 && book.Price > book.OriginalPrice && (book.PictureUrl != null || book.PictureUrl != ""))
             {
                 _context.Add(book);
                 await _context.SaveChangesAsync();
@@ -79,6 +79,10 @@ namespace EveryBook.Controllers
             if (book.Price < book.OriginalPrice)
             {
                 ModelState.AddModelError(nameof(book.Price), "Price needed to be grater than the \"Original Price\".");
+            }
+            if (book.PictureUrl == null || book.PictureUrl == "")
+            {
+                ModelState.AddModelError(nameof(book.PictureUrl), "The Picture Url field is required.");
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", book.GenreId);
             return View(book);
@@ -106,7 +110,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,GenreId")] Book book)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,GenreId")] Book book)
         {
             if (id != book.Id)
             {

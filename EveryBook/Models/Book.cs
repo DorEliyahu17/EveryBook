@@ -14,7 +14,9 @@ namespace EveryBook.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
+        [Required]
+        [Url]
+        [DisplayName("Picture Url")]
         public string PictureUrl { get; set; }
 
         [Required(AllowEmptyStrings = false)]
