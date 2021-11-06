@@ -20,14 +20,14 @@ namespace EveryBook.Controllers
             _context = context;
         }
 
-        // GET: Books
+        // GET: Books?bookname=BLA
         public async Task<IActionResult> Index([FromQuery] string bookName, [FromQuery] long? genreId)
         {
             IEnumerable<Book> everyBookContext = _context.Book.Include(b => b.Genre);
 
             if (!String.IsNullOrEmpty(bookName))
             {
-                everyBookContext = everyBookContext.Where(b => b.Name == bookName).ToList();
+                everyBookContext = everyBookContext.Where(b => b.Name.Contains(bookName)).ToList();
             }
 
             if (genreId.HasValue)
@@ -192,7 +192,16 @@ namespace EveryBook.Controllers
         //join - most purchased Genre - genre controller
 
         //join - most purchased Book
-
-        //join - most purchased Store - store controller
+        [HttpGet]
+        public IEnumerable MostPurBook()
+        {
+            var MostPurBook = (from b in _context.Book
+                               from o in _context.Order
+                               where o.Books.Contains(b)
+                               group b by b.Name into bo
+                               select new { Value = bo.Count(), Name = bo.Key }).ToList();
+            return MostPurBook;
+        }
+        //join - most wanted du - store controller
     }
 }
