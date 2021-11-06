@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EveryBook.Data;
 using EveryBook.Models;
+using System.Collections;
 
 namespace EveryBook.Controllers
 {
@@ -161,6 +162,17 @@ namespace EveryBook.Controllers
         private bool OrderExists(long id)
         {
             return _context.Order.Any(e => e.Id == id);
+        }
+
+        //join - most wanted DistributionUnit
+        [HttpGet]
+        public IEnumerable MostWantedDS()
+        {
+            var MostPurDS = (from o in _context.Order
+                             join ods in _context.DistributionUnit on o.DistributionUnitId equals ods.Id
+                             group ods by ods.Name into dsn
+                             select new { Value = dsn.Count(), Name = dsn.Key }).ToList();
+            return MostPurDS;
         }
     }
 }

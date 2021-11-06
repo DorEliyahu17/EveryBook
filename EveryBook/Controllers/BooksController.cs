@@ -21,7 +21,7 @@ namespace EveryBook.Controllers
         }
 
         // GET: Books?bookname=BLA
-        public async Task<IActionResult> Index([FromQuery] string bookName, [FromQuery] long? genreId)
+        public async Task<IActionResult> Index([FromQuery] string bookName, [FromQuery] string? genreName, [FromQuery] float? price)
         {
             IEnumerable<Book> everyBookContext = _context.Book.Include(b => b.Genre);
 
@@ -30,10 +30,16 @@ namespace EveryBook.Controllers
                 everyBookContext = everyBookContext.Where(b => b.Name.Contains(bookName)).ToList();
             }
 
-            if (genreId.HasValue)
+            if (!String.IsNullOrEmpty(genreName))
             {
-                everyBookContext = everyBookContext.Where(b => b.GenreId == genreId).ToList();
+                everyBookContext = everyBookContext.Where(b => b.Genre.Name == genreName).ToList();
             }
+
+            if (price.HasValue)
+            {
+                everyBookContext = everyBookContext.Where(b => b.Price == price).ToList();
+            }
+
             return View(everyBookContext);
         }
 
@@ -190,6 +196,17 @@ namespace EveryBook.Controllers
         }
 
         //join - most purchased Genre - genre controller
+        [HttpGet]
+        public IEnumerable MostPurGenre()
+        {
+            var MostPurGenre = (from o in _context.Order
+                                from b in _context.Book
+                                join g in _context.Genre on b.GenreId equals g.Id
+                                where o.Books.Contains(b)
+                                group g by g.Name into bgName
+                                select new { Value = bgName.Count(), Name = bgName.Key }).ToList();
+            return MostPurGenre;
+        }
 
         //join - most purchased Book
         [HttpGet]
@@ -202,6 +219,5 @@ namespace EveryBook.Controllers
                                select new { Value = bo.Count(), Name = bo.Key }).ToList();
             return MostPurBook;
         }
-        //join - most wanted du - store controller
     }
 }
