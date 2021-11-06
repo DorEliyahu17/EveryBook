@@ -3,12 +3,18 @@
 @{
     ViewData["Title"] = "Details";
 }
+<style>
+    #imgplace {
+        float: right;
+        top: +200px;
+    }
+</style>
 
 <h1>Details</h1>
 
 <div>
     <h4>Book</h4>
-    <hr />
+        <img src="@Model.PictureUrl" id="imgplace" width="350" height="300"> 
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -53,8 +59,8 @@
             @Html.DisplayFor(model => model.Genre.Name)
         </dd>
     </dl>
-    <img src="@Model.PictureUrl">
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
