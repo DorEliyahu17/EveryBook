@@ -3,23 +3,34 @@
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Books List</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<form asp-action="Index" method="get">
-    <label for="bookName">bookName:</label>
-    <input type="text" id="bookName" name="bookName"><br><br>
-    <label for="genreId">genreId:</label>
-    <input type="text" id="genreId" name="genreId"><br><br>
-    <label for="price">price:</label>
-    <input type="text" id="price" name="price"><br><br>
-    <input type="submit" value="Submit">
-</form>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Books List</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" asp-action="Create">Create New <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort by
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Price</a>
+                    <a class="dropdown-item" href="#">Available Quantity</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="text" id="bookName" name="bookName" placeholder="BookName" aria-label="BookName">
+        <input class="form-control mr-sm-2" type="text" id="genreId" name="genreId" placeholder="GenreId" aria-label="GenreId">
+        <input class="form-control mr-sm-2" type="text" id="price" name="price" placeholder="Price" aria-label="Price">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
 
 <div class="container">
     <div class="row row-cols-5">
