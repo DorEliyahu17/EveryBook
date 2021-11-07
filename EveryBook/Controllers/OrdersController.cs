@@ -168,11 +168,11 @@ namespace EveryBook.Controllers
         [HttpGet]
         public IEnumerable MostWantedDS()
         {
-            var MostPurDS = (from o in _context.Order
+            var MostWantedDS = (from o in _context.Order
                              join ods in _context.DistributionUnit on o.DistributionUnitId equals ods.Id
                              group ods by ods.Name into dsn
                              select new { Value = dsn.Count(), Name = dsn.Key }).ToList();
-            return MostPurDS;
+            return MostWantedDS;
         }
     }
 }
