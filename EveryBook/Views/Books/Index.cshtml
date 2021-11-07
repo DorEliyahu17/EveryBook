@@ -14,25 +14,15 @@
             <li class="nav-item active">
                 <a class="nav-link" asp-action="Create">Create New <span class="sr-only"></span></a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sort by
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Price</a>
-                    <a class="dropdown-item" href="#">Available Quantity</a>
-                </div>
-            </li>
         </ul>
     </div>
     <form class="form-inline">
-        <input class="form-control mr-sm-2" type="text" id="bookName" name="bookName" placeholder="BookName" aria-label="BookName">
-        <input class="form-control mr-sm-2" type="text" id="genreId" name="genreId" placeholder="GenreId" aria-label="GenreId">
-        <input class="form-control mr-sm-2" type="text" id="price" name="price" placeholder="Price" aria-label="Price">
+        <input class="form-control mr-sm-2" type="text" id="bookName" name="bookName" placeholder="Book Name">
+        <input class="form-control mr-sm-2" type="text" id="genreName" name="genreName" placeholder="Genre Name">
+        <input class="form-control mr-sm-2" type="text" id="price" name="price" placeholder="Max Price">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </nav>
-
 <div class="container">
     <div class="row row-cols-3">
         @foreach (var item in Model)

@@ -37,7 +37,7 @@ namespace EveryBook.Controllers
 
             if (price.HasValue)
             {
-                everyBookContext = everyBookContext.Where(b => b.Price == price).ToList();
+                everyBookContext = everyBookContext.Where(b => b.Price <= price).ToList();
             }
 
             return View(everyBookContext);
