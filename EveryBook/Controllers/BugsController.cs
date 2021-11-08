@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace EveryBook.Controllers
     public class BugsController : Controller
     {
         private readonly EveryBookContext _context;
+        private readonly UserManager<ExtendUser> _UserManager;
 
-        public BugsController(EveryBookContext context)
+        public BugsController(EveryBookContext context, UserManager<ExtendUser> UserManager)
         {
             _context = context;
+            _UserManager = UserManager;
         }
 
         // GET: Bugs
@@ -37,6 +40,7 @@ namespace EveryBook.Controllers
             var bug = await _context.Bug
                 .Include(b => b.ExtendUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (bug == null)
             {
                 return NotFound();
@@ -59,6 +63,8 @@ namespace EveryBook.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,ExtendUserId")] Bug bug)
         {
+            var user = _UserManager.Users.Where(u => u.Email == User.Identity.Name).ToList();
+            bug.ExtendUserId = user[0].Id;
             if (ModelState.IsValid)
             {
                 _context.Add(bug);
