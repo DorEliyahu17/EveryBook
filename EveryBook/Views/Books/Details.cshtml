@@ -3,44 +3,53 @@
 @{
     ViewData["Title"] = "Details";
 }
-<h1>@Model.Name -Details</h1>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">@Model.Name - Details</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <a class="nav-link" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<hr />
+<img src="@Model.PictureUrl" width="350" height="300" align="right">
 
-        <img src="@Model.PictureUrl" width="350" height="300" align="right">
 
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Author)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Author)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Genre)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Genre.Name)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Price)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Price)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.AvailableQuantity)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.AvailableQuantity)
-            </dd>
-        </dl>
-
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="col-md-6">
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Author</td>
+                <td>@Model.Author</td>
+                <td class="table"></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Genre</td>
+                <td>@Model.Genre.Name</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Price</td>
+                <td>@Model.Price$</td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>Available Quantity</td>
+                <td>@Model.AvailableQuantity</td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+                <td>Description</td>
+                <td>@Model.Description</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
