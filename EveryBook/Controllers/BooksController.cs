@@ -74,7 +74,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,IsGenreDeleted,GenreId")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,IsDeleted,GenreId")] Book book)
         {
             if (ModelState.IsValid && book.AvailableQuantity > 0 && book.OriginalPrice > 0 && book.Price > book.OriginalPrice && (book.PictureUrl != null || book.PictureUrl != ""))
             {
@@ -116,7 +116,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,IsGenreDeleted,GenreId")] Book book)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,IsDeleted,GenreId")] Book book)
         {
             if (id != book.Id)
             {
