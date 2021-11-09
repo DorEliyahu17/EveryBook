@@ -29,15 +29,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
                         </li>
-                        @if (SignInManager.IsSignedIn(User) 
-                            && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result,"Admin").Result) {  
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Bugs" asp-action="Index">Bugs</a>
-                            </li>
+                        @if (SignInManager.IsSignedIn(User))
+                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
                             </li>
-                        }
+                            @if(UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Bugs" asp-action="Index">Bugs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Statistics">Statistics</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UsersList">UsersList</a>
+                                </li>
+                            }
+                         }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
