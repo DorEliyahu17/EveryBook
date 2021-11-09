@@ -200,14 +200,11 @@ namespace EveryBook.Controllers
             return _context.Bug.Any(e => e.Id == id);
         }
 
-        //join - most reporter User
+        //most reporter User
         [HttpGet]
         public IEnumerable CountIsDone()
         {
-            var CountIsDone = (//from u in _context.ExtendUser
-                               from b in _context.Bug
-                               //where b.ExtendUserId.Equals(u.Id)
-                               //group u by u.Email into ub
+            var CountIsDone = (from b in _context.Bug
                                group b by b.IsDone into bd
                                select new { Value = bd.Count(), Name = ( bd.Key == true ? "Done" : "Pending" ) }).ToList();
             return CountIsDone;

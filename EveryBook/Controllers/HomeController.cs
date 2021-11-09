@@ -53,6 +53,39 @@ namespace EveryBook.Controllers
             return View();
         }
 
+        // GET: Home/UsersList
+        public IActionResult UsersList()
+        {
+            if (!(_SignInManager.IsSignedIn(User) && _UserManager.IsInRoleAsync(_UserManager.GetUserAsync(User).Result, "Admin").Result))
+            {
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
+            }
+            IEnumerable<ExtendUser> everyBookContext = _context.ExtendUser;
+
+            return View(everyBookContext);
+        }
+
+        // POST: Home/ChangeRole/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeRole(string id, [Bind("Id")] ExtendUser extendUser)
+        {
+            var user = await _UserManager.FindByIdAsync(id);
+            var isAdmin = await _UserManager.IsInRoleAsync(user, "Admin");
+            if (isAdmin)
+            {
+                await _UserManager.RemoveFromRoleAsync(user, "Admin");
+                await _UserManager.AddToRoleAsync(user, "User");
+            } else
+            {
+                await _UserManager.RemoveFromRoleAsync(user, "User");
+                await _UserManager.AddToRoleAsync(user, "Admin");
+            }
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(UsersList));
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
