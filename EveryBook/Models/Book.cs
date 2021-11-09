@@ -44,6 +44,10 @@ namespace EveryBook.Models
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}.")]
         public int AvailableQuantity { get; set; } = 1;
 
+        [Required]
+        [DefaultValue(false)]
+        public bool IsDeleted { get; set; }
+
         [DisplayName("Genre")]
         [ForeignKey("Genre")]
         public long GenreId { get; set; }

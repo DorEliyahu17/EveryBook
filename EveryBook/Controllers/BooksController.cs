@@ -74,7 +74,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,GenreId")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,IsGenreDeleted,GenreId")] Book book)
         {
             if (ModelState.IsValid && book.AvailableQuantity > 0 && book.OriginalPrice > 0 && book.Price > book.OriginalPrice && (book.PictureUrl != null || book.PictureUrl != ""))
             {
@@ -116,7 +116,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,GenreId")] Book book)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,IsGenreDeleted,GenreId")] Book book)
         {
             if (id != book.Id)
             {
@@ -172,7 +172,8 @@ namespace EveryBook.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var book = await _context.Book.FindAsync(id);
-            _context.Book.Remove(book);
+            book.IsDeleted = true;
+            _context.Book.Update(book);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -189,19 +190,35 @@ namespace EveryBook.Controllers
         public IEnumerable BooksByGenre()
         {
             var booksByGenre = _context.Book
+                .Where(b => b.IsDeleted == false)
                 .GroupBy(b => new { GenreName = b.Genre.Name })
                 .Select(r => new { Value = r.Count(), Name = r.Key.GenreName })
                 .ToList();
             return booksByGenre;
         }
 
-        //join - most purchased Genre - genre controller
+        //join - Books in Genre
+        [HttpGet]
+        public IEnumerable BooksInGenre()
+        {
+            var BooksInGenre = (from b in _context.Book
+                                where b.IsDeleted == false
+                                join g in _context.Genre on b.GenreId equals g.Id
+                                where g.IsDeleted == false
+                                group g by g.Name into bgName
+                                select new { Value = bgName.Count(), Name = bgName.Key }).ToList();
+            return BooksInGenre;
+        }
+
+        //join - most purchased Genre
         [HttpGet]
         public IEnumerable MostPurGenre()
         {
             var MostPurGenre = (from o in _context.Order
-                                from b in _context.Book
+                                //from b in _context.Book
+                                join b in _context.Book on false equals b.IsDeleted
                                 join g in _context.Genre on b.GenreId equals g.Id
+                                where g.IsDeleted == false
                                 where o.Books.Contains(b)
                                 group g by g.Name into bgName
                                 select new { Value = bgName.Count(), Name = bgName.Key }).ToList();
@@ -212,8 +229,9 @@ namespace EveryBook.Controllers
         [HttpGet]
         public IEnumerable MostPurBook()
         {
-            var MostPurBook = (from b in _context.Book
+            var MostPurBook = (//from b in _context.Book
                                from o in _context.Order
+                               join b in _context.Book on false equals b.IsDeleted
                                where o.Books.Contains(b)
                                group b by b.Name into bo
                                select new { Value = bo.Count(), Name = bo.Key }).ToList();

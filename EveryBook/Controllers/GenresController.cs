@@ -140,7 +140,14 @@ namespace EveryBook.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var genre = await _context.Genre.FindAsync(id);
-            _context.Genre.Remove(genre);
+            genre.IsDeleted = true;
+            var books = _context.Book.Where(b => b.GenreId == id).ToArray();
+            for (int i = 0; i < books.Length; i++)
+            {
+                books[i].IsDeleted = true;
+                _context.Book.Update(books[i]);
+            }
+            _context.Genre.Update(genre);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
