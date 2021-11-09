@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EveryBook.Data;
 using EveryBook.Models;
+using System.Collections;
 
 namespace EveryBook.Controllers
 {
@@ -130,9 +131,7 @@ namespace EveryBook.Controllers
             return View(bug);
         }
 
-        // POST: Bugs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Bugs/ChangeDone/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeDone(long id, [Bind("Id,Title,Description,IsDone,ExtendUserId")] Bug bug)
@@ -199,6 +198,19 @@ namespace EveryBook.Controllers
         private bool BugExists(long id)
         {
             return _context.Bug.Any(e => e.Id == id);
+        }
+
+        //join - most reporter User
+        [HttpGet]
+        public IEnumerable CountIsDone()
+        {
+            var CountIsDone = (//from u in _context.ExtendUser
+                               from b in _context.Bug
+                               //where b.ExtendUserId.Equals(u.Id)
+                               //group u by u.Email into ub
+                               group b by b.IsDone into bd
+                               select new { Value = bd.Count(), Name = ( bd.Key == true ? "Done" : "Pending" ) }).ToList();
+            return CountIsDone;
         }
     }
 }
