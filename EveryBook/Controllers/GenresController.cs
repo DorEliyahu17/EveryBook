@@ -58,7 +58,19 @@ namespace EveryBook.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(genre);
+                var isalreadyCreated = _context.Genre.Where(g => g.Name.ToLower() == genre.Name.ToLower()).FirstOrDefault();
+                if (isalreadyCreated != null)
+                {
+                    if (isalreadyCreated.IsDeleted == false)
+                    {
+                        return View(genre);
+                    }
+                    isalreadyCreated.IsDeleted = false;
+                    _context.Update(isalreadyCreated);
+                } else
+                {
+                    _context.Add(genre);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

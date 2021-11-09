@@ -36,22 +36,23 @@
     <tbody>
         @foreach (var item in Model)
         {
-            ;
-        <tr>
-            <td>@item.Name</td>
-            <th scope="row">(Number row)</th>
-            <td style="text-align:center;">
-                @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
-                {
-                    <form id="delete-type-@item.Id" method="post" asp-action="Delete">
-                        <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
-                        <input type="hidden" value="@item.Id" />
-                        <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </form>
-                }
-            </td>
-        </tr>
-
-        }
+            @if (!(item.IsDeleted))
+             {
+                <tr>
+                    <td>@item.Name</td>
+                    <th scope="row">(Number row)</th>
+                    <td style="text-align:center;">
+                        @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+                        {
+                            <form id="delete-type-@item.Id" method="post" asp-action="Delete">
+                                <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
+                                <input type="hidden" value="@item.Id" />
+                                <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </form>
+                        }
+                    </td>
+                </tr>
+             }
+         }
     </tbody>
 </table>
