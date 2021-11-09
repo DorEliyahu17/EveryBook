@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace EveryBook.Controllers
     public class BugsController : Controller
     {
         private readonly EveryBookContext _context;
+        private readonly UserManager<ExtendUser> _UserManager;
 
-        public BugsController(EveryBookContext context)
+        public BugsController(EveryBookContext context, UserManager<ExtendUser> UserManager)
         {
             _context = context;
+            _UserManager = UserManager;
         }
 
         // GET: Bugs
@@ -37,6 +40,7 @@ namespace EveryBook.Controllers
             var bug = await _context.Bug
                 .Include(b => b.ExtendUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (bug == null)
             {
                 return NotFound();
@@ -57,8 +61,11 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ExtendUserId")] Bug bug)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,IsDone,ExtendUserId")] Bug bug)
         {
+            var user = _UserManager.Users.Where(u => u.Email == User.Identity.Name).ToList();
+            bug.ExtendUserId = user[0].Id;
+            bug.IsDone = false;
             if (ModelState.IsValid)
             {
                 _context.Add(bug);
@@ -69,6 +76,7 @@ namespace EveryBook.Controllers
             return View(bug);
         }
 
+        
         // GET: Bugs/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
@@ -91,7 +99,43 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Description,ExtendUserId")] Bug bug)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Title,Description,IsDone,ExtendUserId")] Bug bug)
+        {
+            if (id != bug.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(bug);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BugExists(bug.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ExtendUserId"] = new SelectList(_context.Users, "Id", "Id", bug.ExtendUserId);
+            return View(bug);
+        }
+
+        // POST: Bugs/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeDone(long id, [Bind("Id,Title,Description,IsDone,ExtendUserId")] Bug bug)
         {
             if (id != bug.Id)
             {

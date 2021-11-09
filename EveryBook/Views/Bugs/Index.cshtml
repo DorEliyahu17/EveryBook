@@ -4,44 +4,64 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/Bug.css" />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExtendUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExtendUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<h1>Bugs list</h1>
+<hr />
+
+<div class="container">
+    <div class="row row-cols-3">
+        @if (@Model.ToArray().Length == 0)
+         {
+            <h1>There are no reported bugs!</h1>
+         }
+        else
+        {
+            @foreach (var item in Model)
+             {
+                <div class="col">
+                    <div class="card">
+                        @if (item.IsDone)
+                        {
+                              <div class="card-body text-sm-center Done">
+                                   <h5 class="card-title">Status: <b>Done!</b></h5>
+                                   <h5 class="card-title">Reporter Email: @item.ExtendUser.Email</h5>
+                                   <h5 class="card-title">@item.Title</h5>
+                                   <p class="card-text">@item.Description</p>
+                                   <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" style="margin-bottom: 5px;">More Details</a>
+                                   <form asp-action="ChangeDone" asp-route-id="@item.Id" method="post">
+                                       <input type="hidden" name="Id" value="@item.Id" />
+                                       <input type="hidden" name="Title" value="@item.Title" />
+                                       <input type="hidden" name="Description" value="@item.Description" />
+                                       <input type="hidden" name="ExtendUserId" value="@item.ExtendUser.Id" />
+                                       <input type="hidden" name="IsDone" value="False" />
+                                       <input type="submit" value="Change To Pending" class="btn btn-outline-warning" />
+                                   </form>
+                                   <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" style="margin-top: 5px;">Delete Bug</a>
+                              </div>
+                        }
+                        else
+                        {
+                              <div class="card-body text-sm-center Pending">
+                                  <h5 class="card-title">Status: <b>Pending</b></h5>
+                                  <h5 class="card-title">Reporter Email: @item.ExtendUser.Email</h5>
+                                  <h5 class="card-title">@item.Title</h5>
+                                  <p class="card-text">@item.Description</p>
+                                  <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" style="margin-bottom: 5px;">More Details</a>
+                                  <form asp-action="ChangeDone" asp-route-id="@item.Id" method="post">
+                                      <input type="hidden" name="Id" value="@item.Id" />
+                                      <input type="hidden" name="Title" value="@item.Title" />
+                                      <input type="hidden" name="Description" value="@item.Description" />
+                                      <input type="hidden" name="ExtendUserId" value="@item.ExtendUser.Id" />
+                                      <input type="hidden" name="IsDone" value="True" />
+                                      <input type="submit" value="Change To Done" class="btn btn-outline-success" />
+                                  </form>
+                                  <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" style="margin-top: 5px;">Delete Bug</a>
+                              </div>
+                        }
+                    </div>
+                </div>
+             }
+        }
+        </div>
+</div>

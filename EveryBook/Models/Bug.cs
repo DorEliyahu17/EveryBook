@@ -19,6 +19,8 @@ namespace EveryBook.Models
         [Required(AllowEmptyStrings = false)]
         public string Description { get; set; }
 
+        public bool IsDone { get; set; }
+
         [ForeignKey("ExtendUser")]
         public string ExtendUserId { get; set; }
 
