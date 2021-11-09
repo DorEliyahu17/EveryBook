@@ -1,47 +1,62 @@
 ﻿@model IEnumerable<EveryBook.Models.Order>
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ExtendUser> SignInManager
+@inject UserManager<ExtendUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+        {
+            <a class="navbar-brand" href="#">All Users Orders</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        }
+        else
+        {
+            <a class="navbar-brand" href="#">My Orders</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        }
+    </div>
+</nav>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PurchaseTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExtendUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DistributionUnit)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PurchaseTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExtendUser.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DistributionUnit.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">PurchaseTime</th>
+                <th scope="col">Email</th>
+                <th scope="col">Pick up location</th>
+                <th scope="col" style="text-align:center;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ExtendUser.Name</td>
+                    <td>@item.PurchaseTime</td>
+                    <td>@item.ExtendUser.Email</td>
+                    <td>@item.DistributionUnit.Name</td>
+                    <th scope="row">
+                        <form style="text-align: center;">
+                            <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
+                        </form>
+                    </th>
+                    <td style="text-align:center;">
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
