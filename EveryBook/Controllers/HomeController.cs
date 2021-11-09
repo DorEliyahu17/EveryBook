@@ -56,13 +56,17 @@ namespace EveryBook.Controllers
         // GET: Home/UsersList
         public IActionResult UsersList()
         {
-            if (!(_SignInManager.IsSignedIn(User) && _UserManager.IsInRoleAsync(_UserManager.GetUserAsync(User).Result, "Admin").Result))
+            if (_SignInManager.IsSignedIn(User))
             {
-                return RedirectToPage("/Account/Login", new { area = "Identity" });
-            }
-            IEnumerable<ExtendUser> everyBookContext = _context.ExtendUser;
+                if (_UserManager.IsInRoleAsync(_UserManager.GetUserAsync(User).Result, "Admin").Result)
+                {
+                    IEnumerable<ExtendUser> everyBookContext = _context.ExtendUser;
 
-            return View(everyBookContext);
+                    return View(everyBookContext);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
         }
 
         // POST: Home/ChangeRole/5

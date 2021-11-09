@@ -8,23 +8,34 @@ using Microsoft.EntityFrameworkCore;
 using EveryBook.Data;
 using EveryBook.Models;
 using System.Collections;
+using Microsoft.AspNetCore.Identity;
 
 namespace EveryBook.Controllers
 {
     public class OrdersController : Controller
     {
         private readonly EveryBookContext _context;
+        private readonly SignInManager<ExtendUser> _SignInManager;
+        private readonly UserManager<ExtendUser> _UserManager;
 
-        public OrdersController(EveryBookContext context)
+        public OrdersController(EveryBookContext context, SignInManager<ExtendUser> SignInManager, UserManager<ExtendUser> UserManager)
         {
             _context = context;
+            _SignInManager = SignInManager;
+            _UserManager = UserManager;
         }
 
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var everyBookContext = _context.Order.Include(o => o.DistributionUnit).Include(o => o.ExtendUser);
-            return View(await everyBookContext.ToListAsync());
+            var loggedInUser = _UserManager.GetUserAsync(User).Result.Id;
+            var orders = _context.Order.Include(o => o.DistributionUnit).Include(o => o.ExtendUser);
+            if (_UserManager.IsInRoleAsync(_UserManager.GetUserAsync(User).Result, "User").Result)
+            {
+                var everyBookContext = orders.Where(o => o.ExtendUserId == loggedInUser);
+                return View(await everyBookContext.ToListAsync());
+            }
+            return View(await orders.ToListAsync());
         }
 
         // GET: Orders/Details/5
