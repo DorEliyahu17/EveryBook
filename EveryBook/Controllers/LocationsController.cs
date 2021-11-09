@@ -54,10 +54,20 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Address,Latitude,Longitude")] Location location)
+        public async Task<IActionResult> Create([Bind("Id,Address,Latitude,Longitude,IsDeleted")] Location location)
         {
             if (ModelState.IsValid)
             {
+                var isalreadyCreated = _context.Location.Where(l => l.Address.ToLower() == location.Address.ToLower() && l.Latitude == location.Latitude && l.Longitude == location.Longitude).FirstOrDefault();
+                if (isalreadyCreated != null)
+                {
+                    if (isalreadyCreated.IsDeleted == false)
+                    {
+                        return View(location);
+                    }
+                    isalreadyCreated.IsDeleted = false;
+                    _context.Update(isalreadyCreated);
+                }
                 _context.Add(location);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +96,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Address,Latitude,Longitude")] Location location)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Address,Latitude,Longitude,IsDeleted")] Location location)
         {
             if (id != location.Id)
             {
@@ -140,7 +150,11 @@ namespace EveryBook.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var location = await _context.Location.FindAsync(id);
-            _context.Location.Remove(location);
+            location.IsDeleted = true;
+            var distributionUnits = _context.DistributionUnit.Where(ds => ds.LocationId == id).FirstOrDefault();
+            distributionUnits.IsDeleted = true;
+            _context.DistributionUnit.Update(distributionUnits);
+            _context.Location.Update(location);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

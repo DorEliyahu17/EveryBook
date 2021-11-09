@@ -57,10 +57,20 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,LocationId")] DistributionUnit distributionUnit)
+        public async Task<IActionResult> Create([Bind("Id,Name,LocationId,IsDeleted")] DistributionUnit distributionUnit)
         {
             if (ModelState.IsValid)
             {
+                var isalreadyCreated = _context.DistributionUnit.Where(ds => ds.Name.ToLower() == distributionUnit.Name.ToLower() && ds.LocationId == distributionUnit.LocationId).FirstOrDefault();
+                if (isalreadyCreated != null)
+                {
+                    if (isalreadyCreated.IsDeleted == false)
+                    {
+                        return View(distributionUnit);
+                    }
+                    isalreadyCreated.IsDeleted = false;
+                    _context.Update(isalreadyCreated);
+                }
                 _context.Add(distributionUnit);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -91,7 +101,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,LocationId")] DistributionUnit distributionUnit)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,LocationId,IsDeleted")] DistributionUnit distributionUnit)
         {
             if (id != distributionUnit.Id)
             {
@@ -147,7 +157,8 @@ namespace EveryBook.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var distributionUnit = await _context.DistributionUnit.FindAsync(id);
-            _context.DistributionUnit.Remove(distributionUnit);
+            distributionUnit.IsDeleted = true;
+            _context.DistributionUnit.Update(distributionUnit);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

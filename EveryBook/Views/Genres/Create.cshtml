@@ -22,11 +22,11 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model != null)
+            {
+                <span class="text-danger">This Genre is already created</span>
+            }
             <div class="form-group">
-                @if (Model != null)
-                {
-                    <span class="text-danger">This Genre is already created</span>
-                }
                 <span asp-validation-for="Name" class="text-danger"></span>
                 <br />
                 <label asp-for="Name" class="control-label"></label>
