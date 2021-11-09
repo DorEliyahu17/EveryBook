@@ -28,8 +28,8 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Name</th>
+            <th scope="col">Books account</th>
             <th scope="col" style="text-align:center;">Actions</th>
         </tr>
     </thead>
@@ -37,17 +37,20 @@
         @foreach (var item in Model)
         {
             ;
-            <tr>
-                <th scope="row">(Number row)</th>
-                <td>@item.Name</td>
-                <td style="text-align:center;">
+        <tr>
+            <td>@item.Name</td>
+            <th scope="row">(Number row)</th>
+            <td style="text-align:center;">
+                @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+                {
                     <form id="delete-type-@item.Id" method="post" asp-action="Delete">
                         <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
                         <input type="hidden" value="@item.Id" />
                         <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </form>
-                </td>
-            </tr>
+                }
+            </td>
+        </tr>
 
         }
     </tbody>
