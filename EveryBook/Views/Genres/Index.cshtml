@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<EveryBook.Models.Genre>
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ExtendUser> SignInManager
+@inject UserManager<ExtendUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -10,11 +14,14 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" asp-action="Create">Create New</a>
+        @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+        {
+            <div class="collapse navbar-collapse">
+                <div class="navbar-nav">
+                    <a class="btn btn-outline-primary" aria-current="page" asp-action="Create">Create New</a>
+                </div>
             </div>
-        </div>
+        }
     </div>
 </nav>
 
@@ -28,7 +35,8 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-        {;
+        {
+            ;
             <tr>
                 <th scope="row">(Number row)</th>
                 <td>@item.Name</td>
@@ -40,39 +48,7 @@
                     </form>
                 </td>
             </tr>
-            
-        }
-    </tbody>
-</table>
 
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
         }
     </tbody>
 </table>

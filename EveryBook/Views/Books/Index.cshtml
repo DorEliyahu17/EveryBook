@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<EveryBook.Models.Book>
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ExtendUser> SignInManager
+@inject UserManager<ExtendUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
@@ -9,13 +13,16 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" asp-action="Create">Create New <span class="sr-only"></span></a>
-            </li>
-        </ul>
-    </div>
+    @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+    {
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="btn btn-outline-primary" asp-action="Create">Create New <span class="sr-only"></span></a>
+                </li>
+            </ul>
+        </div>
+    }
     <form class="form-inline">
         <input class="form-control mr-sm-2" type="text" id="bookName" name="bookName" placeholder="Book Name">
         <input class="form-control mr-sm-2" type="text" id="genreName" name="genreName" placeholder="Genre Name">
@@ -29,74 +36,18 @@
         @foreach (var item in Model)
         {
             <div class="col">
-                <div class="card-body text-sm-center">
-                    <img class="card-img-top" src=@item.PictureUrl width="200" height="170">
-                    <h4 class="fw-bold card-title">@item.Name</h4>
-                    <h6 class="card-title">@item.Author</h6>
-                    <h6 class="card-title">@item.Genre.Name</h6>
-                    <h6 class="text-danger card-title">@item.Price$</h6>
-                    <p class="card-text">@item.Description</p>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                <div class="card">
+                    <div class="card-body text-sm-center">
+                        <img class="card-img-top" src=@item.PictureUrl width="200" height="170">
+                        <h4 class="fw-bold card-title">@item.Name</h4>
+                        <h6 class="card-title">@item.Author</h6>
+                        <h6 class="card-title">@item.Genre.Name</h6>
+                        <h6 class="text-danger card-title">@item.Price$</h6>
+                        <p class="card-text">@item.Description</p>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                    </div>
                 </div>
             </div>
         }
     </div>
 </div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AvailableQuantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AvailableQuantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
