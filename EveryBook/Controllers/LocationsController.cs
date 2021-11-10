@@ -10,22 +10,22 @@ using EveryBook.Models;
 
 namespace EveryBook.Controllers
 {
-    public class GenresController : Controller
+    public class LocationsController : Controller
     {
         private readonly EveryBookContext _context;
 
-        public GenresController(EveryBookContext context)
+        public LocationsController(EveryBookContext context)
         {
             _context = context;
         }
 
-        // GET: Genres
+        // GET: Locations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Genre.ToListAsync());
+            return View(await _context.Location.ToListAsync());
         }
 
-        // GET: Genres/Details/5
+        // GET: Locations/Details/5
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -33,51 +33,49 @@ namespace EveryBook.Controllers
                 return NotFound();
             }
 
-            var genre = await _context.Genre
+            var location = await _context.Location
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (genre == null)
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return View(genre);
+            return View(location);
         }
 
-        // GET: Genres/Create
+        // GET: Locations/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Genres/Create
+        // POST: Locations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,IsDeleted")] Genre genre)
+        public async Task<IActionResult> Create([Bind("Id,Address,Latitude,Longitude,IsDeleted")] Location location)
         {
             if (ModelState.IsValid)
             {
-                var isalreadyCreated = _context.Genre.Where(g => g.Name.ToLower() == genre.Name.ToLower()).FirstOrDefault();
+                var isalreadyCreated = _context.Location.Where(l => l.Address.ToLower() == location.Address.ToLower() && l.Latitude == location.Latitude && l.Longitude == location.Longitude).FirstOrDefault();
                 if (isalreadyCreated != null)
                 {
                     if (isalreadyCreated.IsDeleted == false)
                     {
-                        return View(genre);
+                        return View(location);
                     }
                     isalreadyCreated.IsDeleted = false;
                     _context.Update(isalreadyCreated);
-                } else
-                {
-                    _context.Add(genre);
                 }
+                _context.Add(location);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(genre);
+            return View(location);
         }
 
-        // GET: Genres/Edit/5
+        // GET: Locations/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -85,22 +83,22 @@ namespace EveryBook.Controllers
                 return NotFound();
             }
 
-            var genre = await _context.Genre.FindAsync(id);
-            if (genre == null)
+            var location = await _context.Location.FindAsync(id);
+            if (location == null)
             {
                 return NotFound();
             }
-            return View(genre);
+            return View(location);
         }
 
-        // POST: Genres/Edit/5
+        // POST: Locations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,IsDeleted")] Genre genre)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Address,Latitude,Longitude,IsDeleted")] Location location)
         {
-            if (id != genre.Id)
+            if (id != location.Id)
             {
                 return NotFound();
             }
@@ -109,12 +107,12 @@ namespace EveryBook.Controllers
             {
                 try
                 {
-                    _context.Update(genre);
+                    _context.Update(location);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GenreExists(genre.Id))
+                    if (!LocationExists(location.Id))
                     {
                         return NotFound();
                     }
@@ -125,10 +123,10 @@ namespace EveryBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(genre);
+            return View(location);
         }
 
-        // GET: Genres/Delete/5
+        // GET: Locations/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -136,37 +134,34 @@ namespace EveryBook.Controllers
                 return NotFound();
             }
 
-            var genre = await _context.Genre
+            var location = await _context.Location
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (genre == null)
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return View(genre);
+            return View(location);
         }
 
-        // POST: Genres/Delete/5
+        // POST: Locations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var genre = await _context.Genre.FindAsync(id);
-            genre.IsDeleted = true;
-            var books = _context.Book.Where(b => b.GenreId == id).ToArray();
-            for (int i = 0; i < books.Length; i++)
-            {
-                books[i].IsDeleted = true;
-                _context.Book.Update(books[i]);
-            }
-            _context.Genre.Update(genre);
+            var location = await _context.Location.FindAsync(id);
+            location.IsDeleted = true;
+            var distributionUnits = _context.DistributionUnit.Where(ds => ds.LocationId == id).FirstOrDefault();
+            distributionUnits.IsDeleted = true;
+            _context.DistributionUnit.Update(distributionUnits);
+            _context.Location.Update(location);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GenreExists(long id)
+        private bool LocationExists(long id)
         {
-            return _context.Genre.Any(e => e.Id == id);
+            return _context.Location.Any(e => e.Id == id);
         }
     }
 }
