@@ -81,7 +81,6 @@ body {
     margin-top: 3px;
     margin-right: 5%;
     float: right;
-    background: #707070;
     text-align: center;
 }
 
@@ -95,7 +94,19 @@ body {
     display: table-cell;
     vertical-align: middle;
 }
+.carousel img {
+    width: 100%;
+    height: 100%
+}
 
+.carousel {
+    width: 540px;
+    height: 360px;
+}
+.twitter_div {
+    column-count: 4;
+    margin-left: 12%;
+}
 
 #Rectangle_6 {
     opacity: 0.4;
@@ -116,6 +127,20 @@ body {
     left: 0px;
     top: 8.5%;
     bottom: auto;
+}
+
+
+#Rectangle_7_np {
+    fill: rgba(241,241,241,1);
+}
+
+.Rectangle_7_np {
+    position: absolute;
+    overflow: visible;
+    width: 100%;
+    height: 70%;
+    left: 0px;
+    top:auto;
 }
 
 
