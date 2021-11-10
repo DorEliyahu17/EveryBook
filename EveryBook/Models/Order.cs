@@ -17,7 +17,7 @@ namespace EveryBook.Models
         public virtual ICollection<Book> Books { get; set; }
 
         [DisplayName("Purchase Time")]
-        public DateTime PurchaseTime { get; set; }
+        public DateTime PurchaseTime { get; set; } = DateTime.Now;
 
         [ForeignKey("ExtendUser")]
         public string ExtendUserId { get; set; }
