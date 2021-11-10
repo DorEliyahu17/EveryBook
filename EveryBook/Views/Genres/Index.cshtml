@@ -36,22 +36,8 @@
     <tbody>
         @foreach (var item in Model)
         {
-            ;
-            <tr>
-                <th scope="row">(Number row)</th>
-                <td>@item.Name</td>
-                <td style="text-align:center;">
-                    <form id="delete-type-@item.Id" method="post" asp-action="Delete">
-                        <a class="btn btn-outline-primary" style="padding: 1px 10px;" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
-                        <input type="hidden" value="@item.Id" />
-                        <a  class="btn btn-outline-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </form>
-                </td>
-            </tr>
-
-        }
             @if (!(item.IsDeleted))
-             {
+            {
                 <tr>
                     <td>@item.Name</td>
                     <th scope="row">(Number row)</th>
@@ -66,39 +52,7 @@
                         }
                     </td>
                 </tr>
-             }
-         }
-    </tbody>
-</table>
-
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <button type="submit" class="btn btn-outline-danger">Delete</button>|
-                </td>
-            </tr>
+            }
         }
     </tbody>
 </table>
