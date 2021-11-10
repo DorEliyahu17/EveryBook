@@ -40,9 +40,9 @@ namespace EveryBook.Models
         public string Description { get; set; }
 
         [DisplayName("Available Quantity")]
-        [DefaultValue(0)]
+        [DefaultValue(1)]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}.")]
-        public int AvailableQuantity { get; set; } = 1;
+        public int AvailableQuantity { get; set; }
 
         [Required]
         [DefaultValue(false)]

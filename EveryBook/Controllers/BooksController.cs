@@ -78,7 +78,7 @@ namespace EveryBook.Controllers
         {
             if (ModelState.IsValid && book.AvailableQuantity > 0 && book.OriginalPrice > 0 && book.Price > book.OriginalPrice && (book.PictureUrl != null || book.PictureUrl != ""))
             {
-                var isalreadyCreated = _context.Book.Where(b => b.Name.ToLower() == book.Author.ToLower() && b.Name.ToLower() == book.Author.ToLower() && b.GenreId == book.GenreId).FirstOrDefault();
+                var isalreadyCreated = _context.Book.Where(b => b.Name.ToLower() == book.Name.ToLower() && b.Author.ToLower() == book.Author.ToLower() && b.GenreId == book.GenreId).FirstOrDefault();
                 if (isalreadyCreated != null)
                 {
                     if (isalreadyCreated.IsDeleted == false)
@@ -229,6 +229,7 @@ namespace EveryBook.Controllers
         {
             var MostPurGenre = (from o in _context.Order
                                 //from b in _context.Book
+                                //where b.IsDeleted == false
                                 join b in _context.Book on false equals b.IsDeleted
                                 join g in _context.Genre on b.GenreId equals g.Id
                                 where g.IsDeleted == false
