@@ -29,12 +29,12 @@ namespace EveryBook.Models
         [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1}.")]
         [DefaultValue(0)]
         [DisplayName("Original Price")]
-        public float OriginalPrice { get; set; }
+        public int OriginalPrice { get; set; }
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than {1} and grater than the \"Original Price\".")]
         [DefaultValue(0)]
-        public float Price { get; set; }
+        public int Price { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         public string Description { get; set; }

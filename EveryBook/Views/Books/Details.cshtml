@@ -23,7 +23,7 @@
 </nav>
 <hr />
 @if (!SignInManager.IsSignedIn(User))
-{ 
+{
     <div>
         <h1 class="text-danger">You must be signed in to add book to shopping cart</h1>
     </div>
@@ -59,14 +59,14 @@
 <!------------------Need to edit href path!!!!!!!!--------------->
 @if (SignInManager.IsSignedIn(User))
 {
-    <div>
-        <a class="text-center btn btn-primary btn-lg" href="/Bugs/Create" role="button">Add to shopping cart</a>
-    </div>
+    <form asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
+        <input type="submit" value="Add To Cart" class="text-center btn btn-primary btn-lg " />
+    </form>
 }
 else
 {
     <div>
-        <a class="text-center btn btn-primary btn-lg disabled" href="/Bugs/Create" role="button">Add to shopping cart</a>
+        <a class="text-center btn btn-primary btn-lg disabled" href="/Bugs/Create" role="button">Add To Cart</a>
     </div>
 }
 

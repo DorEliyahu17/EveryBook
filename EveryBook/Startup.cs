@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,9 @@ namespace EveryBook
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<EveryBookContext>();
             services.AddControllersWithViews();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(10));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,12 +58,10 @@ namespace EveryBook
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

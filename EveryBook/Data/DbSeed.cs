@@ -127,12 +127,12 @@ namespace EveryBook.Data
             {
                 context.DistributionUnit.Add(new DistributionUnit()
                 {
-                    Name = "Azriei Holon Mall",
+                    Name = "Azrieli Holon Mall",
                     Location = location1
                 }); ;
                 context.DistributionUnit.Add(new DistributionUnit()
                 {
-                    Name = "Azriei Tower",
+                    Name = "Azrieli Tower",
                     Location = location2
                 });
                 context.DistributionUnit.Add(new DistributionUnit()
@@ -142,7 +142,7 @@ namespace EveryBook.Data
                 });
                 context.DistributionUnit.Add(new DistributionUnit()
                 {
-                    Name = "Azriei Modiin Mall",
+                    Name = "Azrieli Modiin Mall",
                     Location = location4
                 });
             }
