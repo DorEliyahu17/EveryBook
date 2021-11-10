@@ -78,7 +78,20 @@ namespace EveryBook.Controllers
         {
             if (ModelState.IsValid && book.AvailableQuantity > 0 && book.OriginalPrice > 0 && book.Price > book.OriginalPrice && (book.PictureUrl != null || book.PictureUrl != ""))
             {
-                _context.Add(book);
+                var isalreadyCreated = _context.Book.Where(b => b.Name.ToLower() == book.Author.ToLower() && b.Name.ToLower() == book.Author.ToLower() && b.GenreId == book.GenreId).FirstOrDefault();
+                if (isalreadyCreated != null)
+                {
+                    if (isalreadyCreated.IsDeleted == false)
+                    {
+                        return View(book);
+                    }
+                    isalreadyCreated.IsDeleted = false;
+                    _context.Update(isalreadyCreated);
+                }
+                else
+                {
+                    _context.Add(book);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
