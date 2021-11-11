@@ -1,19 +1,11 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-@import url(http://typekit.com/eulas/00000000000000003b9ae84f);
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
-    
-    
-    
 }
-li.nav-item{
-    font-weight:normal;
-    
-}
-
 
 /* Provide sufficient contrast against white background */
 a {
@@ -71,9 +63,6 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    font-family: Nobel;
-    background: #f1f1f1;
-    
 }
 
 .footer {
@@ -82,9 +71,8 @@ body {
     width: 100%;
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
-
 }
-*/
+
 .twitterborder {
     width: 300px;
     top: 1350px;
@@ -92,7 +80,7 @@ body {
     height: 300px;
     margin-top: 3px;
     margin-right: 5%;
-    float: none;
+    float: right;
     text-align: center;
 }
 
@@ -106,15 +94,17 @@ body {
     display: table-cell;
     vertical-align: middle;
 }
+
 .carousel img {
     width: 100%;
-    height: 100%;
+    height: 100%
 }
 
 .carousel {
-    width: 100%;
-    height: 100%;
+    width: 540px;
+    height: 360px;
 }
+
 .twitter_div {
     column-count: 4;
     margin-left: 12%;
@@ -152,13 +142,13 @@ body {
     width: 100%;
     height: 70%;
     left: 0px;
-    top:auto;
+    top: auto;
 }
 
 
 #A_book_for_every_person__and_a {
     left: 25%;
-    top:  25%;
+    top: 25%;
     position: absolute;
     overflow: visible;
     width: 983px;
@@ -170,6 +160,3 @@ body {
     font-size: 79px;
     color: rgba(255,255,255,1);
 }
-
-
-
