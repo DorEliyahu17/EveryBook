@@ -27,10 +27,11 @@
     </div>
 </nav>
 
+<!--
     <p>
         <a asp-action="Create">Create New</a>
     </p>
-
+    -->
     <table class="table table-striped">
         <thead>
             <tr>
@@ -51,7 +52,7 @@
                     <td>@item.DistributionUnit.Name</td>
                     <th scope="row">
                         <form style="text-align: center;">
-                            <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
+                            <a class="btn btn-secondary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
                         </form>
                     </th>
                     <td style="text-align:center;">
