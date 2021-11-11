@@ -228,8 +228,6 @@ namespace EveryBook.Controllers
         public IEnumerable MostPurGenre()
         {
             var MostPurGenre = (from o in _context.Order
-                                    //from b in _context.Book
-                                    //where b.IsDeleted == false
                                 join b in _context.Book on false equals b.IsDeleted
                                 join g in _context.Genre on b.GenreId equals g.Id
                                 where g.IsDeleted == false
@@ -243,8 +241,7 @@ namespace EveryBook.Controllers
         [HttpGet]
         public IEnumerable MostPurBook()
         {
-            var MostPurBook = (//from b in _context.Book
-                               from o in _context.Order
+            var MostPurBook = (from o in _context.Order
                                join b in _context.Book on false equals b.IsDeleted
                                where o.Books.Contains(b)
                                group b by b.Name into bo
