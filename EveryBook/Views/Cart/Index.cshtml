@@ -1,0 +1,65 @@
+﻿@functions { 
+    public string GetUniqueSessionKey(string key)
+    {
+        return User.Identity.Name.ToString() + key;
+    }
+}
+
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Identity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject UserManager<ExtendUser> UserManager
+
+<h1>Cart</h1>
+<hr />
+
+<div class="container">
+    @if (HttpContextAccessor.HttpContext.Session.GetInt32(GetUniqueSessionKey("BooksInCart")) > 0)
+     {
+        <div class="content">
+            <div class="row row-cols-3">
+                @foreach (Book item in JsonConvert.DeserializeObject<List<Book>>(HttpContextAccessor.HttpContext.Session.GetString(GetUniqueSessionKey("BooksInCart"))))
+                 {
+                    <div class="col">
+                        <div class="card">
+                            @if (!(item.IsDeleted))
+                             {
+                                <div class="col-4">
+                                    <div class="card">
+                                        <div class="card-body text-sm-center">
+                                            <img class="card-img-top" src=@item.PictureUrl width="200" height="170">
+                                            <h4 class="fw-bold card-title">@item.Name</h4>
+                                            <h6 class="text-danger card-title">@item.Price$</h6>
+                                            <p class="card-text">@item.Description</p>
+                                            <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                                            <form asp-action="RemoveFromCart" asp-route-id="@item.Id" method="post">
+                                                <input type="submit" value="Remove Book From Cart" class="btn btn-danger" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                             }
+                        </div>
+                    </div>
+                 }
+            </div>
+            <div class="col-md-4">
+               <h4 class="text">Total To Pay: @HttpContextAccessor.HttpContext.Session.GetInt32(GetUniqueSessionKey("TotalToPay"))$</h4>
+               <form asp-controller="Orders" asp-action="Create" method="post">
+                   <label name="DistributionUnitId" class="control-label"></label>
+                   <select name="DistributionUnitId" class="form-control" asp-items="ViewBag.DistributionUnitId"></select>
+                   <input type="hidden" name="ExtendUserId" value="@UserManager.GetUserAsync(User).Result.Id" />
+                   <input type="submit" value="Perchase" class="btn btn-success" style="margin-top: 10px;"/>
+               </form>
+            </div>
+        </div>
+     }
+     else
+     {
+        <h1 style="color: red;">Your cart is empty!</h1>
+     }
+     <hr />
+     <a class="btn btn-info" href="@Url.Action("Index", "Home")">Continue Shopping</a>
+</div>
+<script src="~/js/cart.js"></script>

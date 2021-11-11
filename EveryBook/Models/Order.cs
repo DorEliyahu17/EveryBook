@@ -14,7 +14,7 @@ namespace EveryBook.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        public virtual ICollection<Book> Books { get; set; }
+        public virtual List<Book> Books { get; set; }
 
         [DisplayName("Purchase Time")]
         public DateTime PurchaseTime { get; set; } = DateTime.Now;

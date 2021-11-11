@@ -4,38 +4,45 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Brunch- List</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+            <div class="navbar-nav">
+                <a class="nav-link" asp-action="Create">Create New</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th></th>
+            <th scope="col">Name</th>
+            <th scope="col">Location</th>
+            <th scope="col" style="text-align:center;">Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location.Address)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Location.Address</td>
+                <th scope="row">
+                    <form style="text-align: center;">
+                        <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
+                        <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
+                        <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                    </form>
+                </th>
+                <td style="text-align:center;">
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
