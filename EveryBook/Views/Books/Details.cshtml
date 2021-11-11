@@ -59,7 +59,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.Id" method="post">
-        <input type="submit" value="Add To Cart" class="text-center btn btn-primary btn-lg " />
+        <input type="submit" value="Add To Cart" class="text-center btn btn-outline-primary  btn-lg " />
     </form>
 }
 else

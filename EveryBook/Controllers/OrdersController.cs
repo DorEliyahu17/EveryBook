@@ -91,7 +91,7 @@ namespace EveryBook.Controllers
             {
                 var booksInOrder = JsonConvert.DeserializeObject<List<Book>>(HttpContext.Session.GetString(GetUniqueSessionKey("BooksInCart")));
                 List<Book> books = new List<Book>();
-                for(int i = 0; i < booksInOrder.Count; i++)
+                for (int i = 0; i < booksInOrder.Count; i++)
                 {
                     books.Add(_context.Book.Include(b => b.Genre).Where(b => b.Id == booksInOrder[i].Id).FirstOrDefault());
                 }
@@ -99,7 +99,7 @@ namespace EveryBook.Controllers
                 order.DistributionUnit = _context.DistributionUnit.Where(d => d.Id == order.DistributionUnitId).FirstOrDefault();
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                HttpContext.Session.SetString(GetUniqueSessionKey("BooksInCart"), JsonConvert.SerializeObject(""));
+                HttpContext.Session.SetString(GetUniqueSessionKey("BooksInCart"), JsonConvert.SerializeObject(null));
                 HttpContext.Session.SetInt32(GetUniqueSessionKey("NumOfBooksInCart"), 0);
                 HttpContext.Session.SetInt32(GetUniqueSessionKey("TotalToPay"), 0);
                 return RedirectToAction(nameof(Index));
@@ -205,9 +205,9 @@ namespace EveryBook.Controllers
         public IEnumerable MostWantedDS()
         {
             var MostWantedDS = (from o in _context.Order
-                             join ods in _context.DistributionUnit on o.DistributionUnitId equals ods.Id
-                             group ods by ods.Name into dsn
-                             select new { Value = dsn.Count(), Name = dsn.Key }).ToList();
+                                join ods in _context.DistributionUnit on o.DistributionUnitId equals ods.Id
+                                group ods by ods.Name into dsn
+                                select new { Value = dsn.Count(), Name = dsn.Key }).ToList();
             return MostWantedDS;
         }
     }

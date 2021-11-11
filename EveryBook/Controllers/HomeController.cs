@@ -3,6 +3,7 @@ using EveryBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using EveryBook.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,7 +31,36 @@ namespace EveryBook.Controllers
         // GET: /
         public IActionResult Index()
         {
-            //return Error();
+            var mostPopularBooks = (from o in _context.Order
+                                    join b in _context.Book on false equals b.IsDeleted
+                                    where o.Books.Contains(b)
+                                    group b by b.Name into bo
+                                    select new { Value = bo.Count(), Name = bo.Key }).ToArray(); 
+            if(mostPopularBooks.Length > 0)
+            {
+                ViewData["FirstBookName"] = mostPopularBooks[0].Name;
+                ViewData["FirstBookValue"] = mostPopularBooks[0].Value;
+                if (mostPopularBooks.Length > 1)
+                {
+                    ViewData["SecondBookName"] = mostPopularBooks[1].Name;
+                    ViewData["SecondBookValue"] = mostPopularBooks[1].Value;
+                    if (mostPopularBooks.Length > 2)
+                    {
+                        ViewData["ThirdBookName"] = mostPopularBooks[2].Name;
+                        ViewData["ThirdBookValue"] = mostPopularBooks[2].Value;
+                        if (mostPopularBooks.Length > 3)
+                        {
+                            ViewData["ForthBookName"] = mostPopularBooks[3].Name;
+                            ViewData["ForthBookValue"] = mostPopularBooks[3].Value;
+                            if (mostPopularBooks.Length > 4)
+                            {
+                                ViewData["FifthBookName"] = mostPopularBooks[4].Name;
+                                ViewData["FifthBookValue"] = mostPopularBooks[4].Value;
+                            }
+                        }
+                    }
+                }
+            }
             return View();
         }
 
