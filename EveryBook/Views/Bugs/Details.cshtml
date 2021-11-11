@@ -4,7 +4,22 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details for bug number: @Model.Id</h1>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Details for bug number: @Model.Id</h1></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            <div class="navbar-nav">
+                <a class="nav-link" asp-action="Index">Back to List</a>
+                <a class="nav-link" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
 <hr />
 
 <div>
@@ -46,8 +61,4 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Index" class="btn btn-primary">Back to Bugs List</a>
-    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete Bug</a>
 </div>
