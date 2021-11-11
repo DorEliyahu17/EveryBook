@@ -4,27 +4,34 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Brunch- Details</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
-<div>
-    <h4>DistributionUnit</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Location.Address)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+            <div class="navbar-nav">
+                <a class="nav-link" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                <a class="nav-link" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<hr />
+
+<div class="col-md-6">
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td>Location</td>
+                <td>@Model.Location.Address</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
