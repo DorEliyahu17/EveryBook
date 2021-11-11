@@ -32,13 +32,15 @@
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 </form>
 </nav>
+<!--
 @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
 { 
+    
         <p>
             <a asp-action="Create">Create New</a>
         </p>
 }
-
+    -->
 <table class="table table-striped">
     <thead>
         <tr>
@@ -59,7 +61,7 @@
                 <td>@item.DistributionUnit.Name</td>
                 <th scope="row">
                     <form style="text-align: center;">
-                        <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
+                        <a class="btn btn-secondary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
                     </form>
                 </th>
                 <td style="text-align:center;">
