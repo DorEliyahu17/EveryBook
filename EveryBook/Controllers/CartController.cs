@@ -133,11 +133,14 @@ namespace EveryBook.Controllers
         private int isBookAlreadyInCart(int id)
         {
             List<Book> cart = JsonConvert.DeserializeObject<List<Book>>(HttpContext.Session.GetString(GetUniqueSessionKey("BooksInCart")));
-            for (int i = 0; i < cart.Count; i++)
+            if (cart != null)
             {
-                if (cart[i].Id == id)
+                for (int i = 0; i < cart.Count; i++)
                 {
-                    return i;
+                    if (cart[i].Id == id)
+                    {
+                        return i;
+                    }
                 }
             }
             return -1;

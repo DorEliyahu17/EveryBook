@@ -43,24 +43,22 @@
 </div>
 
 <h4>Products in this order</h4>
-<!--
 <div class="container">
     <div class="row row-cols-3">
-        foreach (var item in Model.Books)
+        @foreach (var item in Model.Books)
         {
                 <div class="col">
                     <div class="card">
                         <div class="card-body text-sm-center">
-                            <img class="card-img-top" src=item.PictureUrl width="200" height="170">
-                            <h4 class="fw-bold card-title">item.Name</h4>
-                            <h6 class="card-title">item.Author</h6>
-                            <h6 class="card-title">item.Genre.Name</h6>
-                            <h6 class="text-danger card-title">item.Price$</h6>
-                            <p class="card-text">item.Description</p>
+                            <img class="card-img-top" src=@item.PictureUrl width="200" height="170">
+                            <h4 class="fw-bold card-title">@item.Name</h4>
+                            <h6 class="card-title">@item.Author</h6>
+                            <h6 class="card-title">@item.Genre.Name</h6>
+                            <h6 class="text-danger card-title">@item.Price$</h6>
+                            <p class="card-text">@item.Description</p>
                         </div>
                     </div>
                 </div>
         }
     </div>
 </div>
--->

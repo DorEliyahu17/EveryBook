@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EveryBook.Data;
 using EveryBook.Models;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 using System.Collections;
 using Microsoft.AspNetCore.Identity;
 
@@ -49,13 +51,25 @@ namespace EveryBook.Controllers
             var order = await _context.Order
                 .Include(o => o.DistributionUnit)
                 .Include(o => o.ExtendUser)
+                .Include(o => o.Books)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            List<Book> booksinOrder = new List<Book>();
+            for (int i = 0; i < order.Books.Count; i++)
+            {
+                booksinOrder.Add(_context.Book.Include(b => b.Genre).Where(b => b.Id == order.Books[i].Id).FirstOrDefault());
+            }
+            order.Books = booksinOrder;
             if (order == null)
             {
                 return NotFound();
             }
 
             return View(order);
+        }
+
+        private string GetUniqueSessionKey(string key)
+        {
+            return HttpContext.User.Identity.Name.ToString() + key;
         }
 
         // GET: Orders/Create
@@ -71,12 +85,23 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ExtendUserId,DistributionUnitId,Books")] Order order)
+        public async Task<IActionResult> Create([Bind("Id,ExtendUserId,DistributionUnitId")] Order order)
         {
             if (ModelState.IsValid)
             {
+                var booksInOrder = JsonConvert.DeserializeObject<List<Book>>(HttpContext.Session.GetString(GetUniqueSessionKey("BooksInCart")));
+                List<Book> books = new List<Book>();
+                for(int i = 0; i < booksInOrder.Count; i++)
+                {
+                    books.Add(_context.Book.Include(b => b.Genre).Where(b => b.Id == booksInOrder[i].Id).FirstOrDefault());
+                }
+                order.Books = books;
+                order.DistributionUnit = _context.DistributionUnit.Where(d => d.Id == order.DistributionUnitId).FirstOrDefault();
                 _context.Add(order);
                 await _context.SaveChangesAsync();
+                HttpContext.Session.SetString(GetUniqueSessionKey("BooksInCart"), JsonConvert.SerializeObject(""));
+                HttpContext.Session.SetInt32(GetUniqueSessionKey("NumOfBooksInCart"), 0);
+                HttpContext.Session.SetInt32(GetUniqueSessionKey("TotalToPay"), 0);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DistributionUnitId"] = new SelectList(_context.DistributionUnit, "Id", "Id", order.DistributionUnitId);
