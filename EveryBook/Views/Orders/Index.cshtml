@@ -26,37 +26,39 @@
         }
     </div>
 </nav>
+@if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+{ 
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+}
 
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-
-    <table class="table table-striped">
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">PurchaseTime</th>
+            <th scope="col">Email</th>
+            <th scope="col">Pick up location</th>
+            <th scope="col" style="text-align:center;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">PurchaseTime</th>
-                <th scope="col">Email</th>
-                <th scope="col">Pick up location</th>
-                <th scope="col" style="text-align:center;">Actions</th>
+                <td>@item.ExtendUser.Name</td>
+                <td>@item.PurchaseTime</td>
+                <td>@item.ExtendUser.Email</td>
+                <td>@item.DistributionUnit.Name</td>
+                <th scope="row">
+                    <form style="text-align: center;">
+                        <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
+                    </form>
+                </th>
+                <td style="text-align:center;">
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.ExtendUser.Name</td>
-                    <td>@item.PurchaseTime</td>
-                    <td>@item.ExtendUser.Email</td>
-                    <td>@item.DistributionUnit.Name</td>
-                    <th scope="row">
-                        <form style="text-align: center;">
-                            <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
-                        </form>
-                    </th>
-                    <td style="text-align:center;">
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
