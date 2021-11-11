@@ -2,10 +2,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-
-
-
 <!--
     <a class="twitter-timeline" href="https://twitter.com/twitterbooks" data-widget-id="234324234234234" data-screen-name="cshtml" width="350" height="350" data-chrome="noborders"></a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -37,19 +33,19 @@
         <div class="carousel-item active">
             <img src="/pictures/book1.jpg" class="d-block w-100" alt="First">
             <div class="carousel-caption">
-                <h3>"A book for every person"</h3>
+                <h3 style="background-color: black">"A book for every person"</h3>
             </div>
         </div>
         <div class="carousel-item">
             <img src="/pictures/book2.jpg" class="d-block w-100" alt="Second">
             <div class="carousel-caption">
-                <h3>"and a person" </h3>
+                <h3 style="background-color: black">"And a person"</h3>
             </div>
         </div>
         <div class="carousel-item">
             <img src="/pictures/book3.jpg" class="d-block w-100" alt="Third" height="158" width="320">
             <div class="carousel-caption">
-                <h3>"for Everybook"</h3>
+                <h3 style="background-color: black">"For Everybook"</h3>
             </div>
         </div>
     </div>
@@ -63,95 +59,62 @@
     </a>
 </div>
 
-<!--
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-    </ol>
-
-    <div class="carousel-inner">
-        <div class="active item">
-            <img src="http://lorempixel.com/1200/315" alt="...">
-            <div class="carousel-content">
-                <p>EveryBook</p>
-            </div>
-            <div class="carousel-caption">
-                <h3>A book for every person</h3>
-            </div>
-        </div>
-        <div class="item">
-            <img src="http://placehold.it/1200x315" alt="...">
-
-        </div>
-        <div class="item">
-            <img src="http://placehold.it/1200x315" alt="...">
-            <div class="carousel-caption">
-                <h3>for Everybook</h3>
-            </div>
-        </div>
-    </div>
-</div>
-    -->
-<!--
-<svg class="Rectangle_6">
-    <rect id="Rectangle_6" rx="0" ry="0" x="0" y="0" width="100%" height="100%">
-    </rect>
-</svg>
-    -->
-<div class="text-md-center">
-    <h1>Top 5 Selling Books</h1>
-</div>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col" style="text-align:center;">Purchased Units</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-<!--
-<svg class="Rectangle_7_np">
-    <rect id="Rectangle_7_np" rx="0" ry="0" x="0" y="0" width="100%" height="100%">
-    </rect>
-</svg>
-    -->
-<!--
-    <div id="A_book_for_every_person__and_a">
-        <span>A book for every person <br />and a person for </span><span style="text-decoration:underline;">Everybook</span>
-    </div>
-
-    <div class="container">
-        <div class="row">
-
-            <div class="twitter_div">
-                <table>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <br /><br />
-
-        </div>
-    </div>
-
-
-    @section Scripts
+@if (ViewBag.FirstBookName == null)
 {
-        <script src="~/js/twitter.js"></script>
-        <script id="twitter-wjs" type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+    <div class="text-md-center">
+        <h1>There are no book that have been sold</h1>
+    </div>
+}
+else
+{
+    <div class="text-md-center">
+        <h1>Top 5 Selling Books</h1>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col" style="text-align:center;">Purchased Units</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@ViewBag.FirstBookName</td>
+                <td style="text-align:center;">@ViewBag.FirstBookValue</td>
+            </tr>
+            @if (ViewBag.SecondBookName != null)
+            {
+                <tr>
+                    <td>@ViewBag.SecondBookName</td>
+                    <td style="text-align:center;">@ViewBag.SecondBookValue</td>
+                </tr>
+            }
+            @if (ViewBag.ThirdBookName != null)
+            {
+                <tr>
+                    <td>@ViewBag.ThirdBookName</td>
+                    <td style="text-align:center;">@ViewBag.ThirdBookValue</td>
+                </tr>
+            }
+            @if (ViewBag.ForthBookName != null)
+            {
+                <tr>
+                    <td>@ViewBag.ForthBookName</td>
+                    <td style="text-align:center;">@ViewBag.ForthBookValue</td>
+                </tr>
+            }
+            @if (ViewBag.FifthBookName != null)
+            {
+                <tr>
+                    <td>@ViewBag.FifthBookName</td>
+                    <td style="text-align:center;">@ViewBag.FifthBookValue</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-        <script>
-    var tweets = @Html.Raw(ViewBag.Tweets);
-    $(document).ready(function () { embedTweet(tweets);});
-        </script>
-
-        <div hidden type="text/html" id="hidden-template">
-            <span id="tweet{id}" style="padding-bottom:10px"></span>
-        </div>
-    }
-    -->
+@section Scripts
+{
+    @Html.Raw(ViewBag.Tweets);
+}

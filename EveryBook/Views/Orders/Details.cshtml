@@ -42,12 +42,12 @@
     </table>
 </div>
 
-<h4>Products in this order</h4>
+<h4>Books in this order</h4>
 <div class="container">
     <div class="row row-cols-3">
         @foreach (var item in Model.Books)
         {
-                <div class="col">
+                <div class="col-4">
                     <div class="card">
                         <div class="card-body text-sm-center">
                             <img class="card-img-top" src=@item.PictureUrl width="200" height="170">
