@@ -116,7 +116,8 @@ $.validator.addMethod( "bankaccountNL", function( value, element ) {
 	return sum % 11 === 0;
 }, "Please specify a valid bank account number" );
 
-$.validator.addMethod( "bankorgiroaccountNL", function( value, element ) {
+	$.validator.addMethod("bank
+	roaccountNL", function( value, element ) {
 	return this.optional( element ) ||
 			( $.validator.methods.bankaccountNL.call( this, value, element ) ) ||
 			( $.validator.methods.giroaccountNL.call( this, value, element ) );

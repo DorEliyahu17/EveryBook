@@ -74,9 +74,9 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,IsDeleted,GenreId")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,PictureUrl,Name,Author,Price,Description,AvailableQuantity,IsDeleted,GenreId")] Book book)
         {
-            if (ModelState.IsValid && book.AvailableQuantity > 0 && book.OriginalPrice > 0 && book.Price > book.OriginalPrice && (book.PictureUrl != null || book.PictureUrl != ""))
+            if (ModelState.IsValid && book.AvailableQuantity > 0  && book.Price > 0 && (book.PictureUrl != null || book.PictureUrl != ""))
             {
                 var isalreadyCreated = _context.Book.Where(b => b.Name.ToLower() == book.Name.ToLower() && b.Author.ToLower() == book.Author.ToLower() && b.GenreId == book.GenreId).FirstOrDefault();
                 if (isalreadyCreated != null)
@@ -94,10 +94,6 @@ namespace EveryBook.Controllers
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            if (book.Price < book.OriginalPrice)
-            {
-                ModelState.AddModelError(nameof(book.Price), "Price needed to be grater than the \"Original Price\".");
             }
             if (book.PictureUrl == null || book.PictureUrl == "")
             {
@@ -129,7 +125,7 @@ namespace EveryBook.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,PictureUrl,Name,Author,OriginalPrice,Price,Description,AvailableQuantity,IsDeleted,GenreId")] Book book)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,PictureUrl,Name,Author,Price,Description,AvailableQuantity,IsDeleted,GenreId")] Book book)
         {
             if (id != book.Id)
             {
