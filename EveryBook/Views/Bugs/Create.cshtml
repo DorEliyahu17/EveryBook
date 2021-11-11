@@ -23,13 +23,13 @@
             <div class="col-md-4 form-group">
                 <span asp-validation-for="Title" class="text-danger"></span>
                 <br />
-                <label asp-for="Title" class="control-label"></label>
+                <p><em>Title</em></p>
                 <input asp-for="Title" class="form-control" />
             </div>
             <div class="col-md-8 form-group">
                 <span asp-validation-for="Description" class="text-danger"></span>
                 <br />
-                <label asp-for="Description" class="control-label"></label>
+                <p><em>Name</em></p>
                 <textarea asp-for="Description" class="form-control" id="Description" rows="3"></textarea>
             </div>
             <!--
@@ -41,11 +41,11 @@
             <div class="col-md-8 form-group">
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Create" class="btn btn-outline-primary" />
                 }
                 else
                 {
-                    <input type="submit" value="Create" class="btn btn-primary" disabled />
+                    <input type="submit" value="Create" class="btn btn-outline-primary" disabled />
                 }
             </div>
         </form>

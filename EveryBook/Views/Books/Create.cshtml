@@ -25,54 +25,54 @@
             {
                 <span class="text-danger">This Book is already created</span>
             }
-            <div class="form-group">
-                <span asp-validation-for="PictureUrl" class="text-danger"></span>
-                <br />
-                <label asp-for="PictureUrl" class="control-label"></label>
-                <input asp-for="PictureUrl" class="form-control" placeholder="" />
-            </div>
+        <div class="form-group">
+            <span asp-validation-for="PictureUrl" class="text-danger"></span>
+            <br />
+            <p><em>Picture Url</em></p>
+            <input asp-for="PictureUrl" class="form-control" placeholder="" />
+        </div>
             <div class="form-group">
                 <span asp-validation-for="Name" class="text-danger"></span>
                 <br />
-                <label asp-for="Name" class="control-label"></label>
+                <p><em>Name</em></p>
                 <input asp-for="Name" class="form-control" />
             </div>
             <div class="form-group">
                 <span asp-validation-for="Author" class="text-danger"></span>
                 <br />
-                <label asp-for="Author" class="control-label"></label>
+                <p><em>Author</em></p>
                 <input asp-for="Author" class="form-control" />
             </div>
             <div class="form-group">
                 <span asp-validation-for="OriginalPrice" class="text-danger"></span>
                 <br />
-                <label asp-for="OriginalPrice" class="control-label"></label>
+                <p><em>Original Price</em></p>
                 <input asp-for="OriginalPrice" class="form-control" />
             </div>
             <div class="form-group">
                 <span asp-validation-for="Price" class="text-danger"></span>
                 <br />
-                <label asp-for="Price" class="control-label"></label>
+                <p><em>Price</em></p>
                 <input asp-for="Price" class="form-control" />
             </div>
             <div class="form-group">
                 <span asp-validation-for="Description" class="text-danger"></span>
                 <br />
-                <label asp-for="Description" class="control-label"></label>
+                <p><em>Description</em></p>
                 <input asp-for="Description" class="form-control" />
             </div>
             <div class="form-group">
                 <span asp-validation-for="AvailableQuantity" class="text-danger"></span>
                 <br />
-                <label asp-for="AvailableQuantity" class="control-label"></label>
+                <p><em>Available Quantity</em></p>
                 <input asp-for="AvailableQuantity" class="form-control" value="1" />
             </div>
             <div class="form-group">
-                <label asp-for="GenreId" class="control-label"></label>
+                <p><em>Genre Id</em></p>
                 <select asp-for="GenreId" class="form-control" asp-items="ViewBag.GenreId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-outline-primary"/>
             </div>
         </form>
     </div>
