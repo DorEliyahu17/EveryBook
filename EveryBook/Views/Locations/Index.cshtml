@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
             <div class="navbar-nav">
-                <a class="nav-link" asp-action="Create">Create New</a>
+                <a class="btn btn-outline-primary"  asp-action="Create">Create New</a>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
             <th scope="row">
                 <form style="text-align: center;">
                     <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
-                    <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
+                    <a class="btn btn-secondary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
                     <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
                 </form>
             </th>
