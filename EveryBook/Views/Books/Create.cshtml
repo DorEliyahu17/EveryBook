@@ -23,7 +23,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @if (Model != null)
             {
-                <span class="text-danger">This Book is already created</span>
+                <span class="text-danger">This Book is already created or the "Available Quantity" is less than 1</span>
             }
         <div class="form-group">
             <span asp-validation-for="PictureUrl" class="text-danger"></span>
