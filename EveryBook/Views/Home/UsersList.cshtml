@@ -37,14 +37,10 @@
                 <td style="text-align:center;">
                     @if (UserManager.IsInRoleAsync(UserManager.FindByEmailAsync(item.Email).Result, "Admin").Result)
                     {
-                        <div class="row">
+                        <div class="row text-center">
                             <form asp-action="ChangeRole" asp-route-id="@item.Id" method="post">
                                 <input type="hidden" name="Id" value="@item.Id" />
                                 <input type="submit" class="btn btn-outline-warning" style="padding: 1px 10px;margin-right: 5px;" value="Demote To User" />
-                            </form>
-                            <form id="delete-type-@item.Id" method="post" asp-action="Delete">
-                                <input type="hidden" value="@item.Id" />
-                                <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                             </form>
                         </div>
                     }
@@ -54,10 +50,6 @@
                             <form asp-action="ChangeRole" asp-route-id="@item.Id" method="post">
                                 <input type="hidden" name="Id" value="@item.Id" />
                                 <input type="submit" class="btn btn-outline-success" style="padding: 1px 10px; margin-right: 5px;s" value="Promote To Admin" />
-                            </form>
-                            <form id="delete-type-@item.Id" method="post" asp-action="Delete">
-                                <input type="hidden" value="@item.Id" />
-                                <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                             </form>
                         </div>
                     }

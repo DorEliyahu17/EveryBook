@@ -9,7 +9,6 @@
 }
 
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
         <a class="navbar-brand" href="#">Genres</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -22,15 +21,23 @@
                 </div>
             </div>
         }
-    </div>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="text" id="genreName" name="genreName" placeholder="Genre Name">
+            <input class="form-control mr-sm-2" type="text" id="booksamount" name="booksamount" placeholder="Max books amount">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
 </nav>
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">Books account</th>
-            <th scope="col" style="text-align:center;">Actions</th>
+            <th scope="col">Books Quantuty</th>
+            @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+            {
+                <th scope="col" style="text-align:center;">Actions</th>
+            }
         </tr>
     </thead>
     <tbody>

@@ -46,6 +46,10 @@
                             <h6 class="card-title">@item.Genre.Name</h6>
                             <h6 class="text-danger card-title">@item.Price$</h6>
                             <p class="card-text">@item.Description</p>
+                            @if(item.AvailableQuantity==0)
+                            {
+                              <h6 class="text-danger">Out of stock</h6>
+                            }
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                         </div>
                     </div>
