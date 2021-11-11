@@ -45,7 +45,7 @@ namespace EveryBook.Controllers
         {
             List<Book> cart;
             Book bookToAdd = _context.Book.Where(b => b.Id == id).FirstOrDefault();
-            if (HttpContext.Session.Get(GetUniqueSessionKey("BooksInCart")) == null)
+            if ((HttpContext.Session.Get(GetUniqueSessionKey("BooksInCart")) == null) || (JsonConvert.DeserializeObject<List<Book>>(HttpContext.Session.GetString(GetUniqueSessionKey("BooksInCart"))) == null))
             {
                 cart = new List<Book>();
                 HttpContext.Session.SetString(GetUniqueSessionKey("BooksInCart"), JsonConvert.SerializeObject(cart));

@@ -65,7 +65,7 @@ namespace EveryBook.Controllers
         // GET: Books/Create
         public IActionResult Create()
         {
-            ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name");
+            ViewData["GenreId"] = new SelectList(_context.Genre.Where(g => g.IsDeleted == false), "Id", "Name");
             return View();
         }
 
@@ -228,8 +228,8 @@ namespace EveryBook.Controllers
         public IEnumerable MostPurGenre()
         {
             var MostPurGenre = (from o in _context.Order
-                                //from b in _context.Book
-                                //where b.IsDeleted == false
+                                    //from b in _context.Book
+                                    //where b.IsDeleted == false
                                 join b in _context.Book on false equals b.IsDeleted
                                 join g in _context.Genre on b.GenreId equals g.Id
                                 where g.IsDeleted == false
