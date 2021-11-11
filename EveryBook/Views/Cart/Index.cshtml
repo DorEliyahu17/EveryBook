@@ -21,8 +21,6 @@
             <div class="row row-cols-3">
                 @foreach (Book item in JsonConvert.DeserializeObject<List<Book>>(HttpContextAccessor.HttpContext.Session.GetString(GetUniqueSessionKey("BooksInCart"))))
                  {
-                    <div class="col">
-                        <div class="card">
                             @if (!(item.IsDeleted))
                              {
                                 <div class="col-4">
@@ -34,14 +32,12 @@
                                             <p class="card-text">@item.Description</p>
                                             <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
                                             <form asp-action="RemoveFromCart" asp-route-id="@item.Id" method="post">
-                                                <input type="submit" value="Remove Book From Cart" class="btn btn-danger" />
+                                                <input type="submit" value="Remove" class="btn btn-danger" />
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                              }
-                        </div>
-                    </div>
                  }
             </div>
             <div class="col-md-4">
