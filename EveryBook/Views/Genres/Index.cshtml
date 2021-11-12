@@ -23,7 +23,6 @@
         }
         <form class="form-inline">
             <input class="form-control mr-sm-2" type="text" id="genreName" name="genreName" placeholder="Genre Name">
-            <input class="form-control mr-sm-2" type="text" id="booksamount" name="booksamount" placeholder="Max books amount">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 
@@ -33,7 +32,6 @@
     <thead>
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">Books Quantuty</th>
             @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
             {
                 <th scope="col" style="text-align:center;">Actions</th>
@@ -47,7 +45,6 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <th scope="row">(Number row)</th>
                     <td style="text-align:center;">
                         @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
                         {

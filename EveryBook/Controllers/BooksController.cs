@@ -27,12 +27,12 @@ namespace EveryBook.Controllers
 
             if (!String.IsNullOrEmpty(bookName))
             {
-                everyBookContext = everyBookContext.Where(b => b.Name.Contains(bookName)).ToList();
+                everyBookContext = everyBookContext.Where(b => b.Name.ToLower().Contains(bookName.ToLower())).ToList();
             }
 
             if (!String.IsNullOrEmpty(genreName))
             {
-                everyBookContext = everyBookContext.Where(b => b.Genre.Name == genreName).ToList();
+                everyBookContext = everyBookContext.Where(b => b.Genre.Name.ToLower().Contains(genreName.ToLower())).ToList();
             }
 
             if (price.HasValue)

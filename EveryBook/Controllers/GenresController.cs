@@ -20,9 +20,16 @@ namespace EveryBook.Controllers
         }
 
         // GET: Genres
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] string? genreName)
         {
-            return View(await _context.Genre.ToListAsync());
+            IEnumerable<Genre> everyBookContext = _context.Genre;
+
+            if (!String.IsNullOrEmpty(genreName))
+            {
+                everyBookContext = everyBookContext.Where(g => g.Name.ToLower().Contains(genreName.ToLower())).ToList();
+            }
+
+            return View(everyBookContext);
         }
 
         // GET: Genres/Details/5

@@ -28,13 +28,33 @@ namespace EveryBook.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] string userEmail, [FromQuery] string? distributionUnitName)
         {
             var loggedInUser = _UserManager.GetUserAsync(User).Result.Id;
             var orders = _context.Order.Include(o => o.DistributionUnit).Include(o => o.ExtendUser);
             if (_UserManager.IsInRoleAsync(_UserManager.GetUserAsync(User).Result, "User").Result)
             {
                 var everyBookContext = orders.Where(o => o.ExtendUserId == loggedInUser);
+
+                if (!String.IsNullOrEmpty(distributionUnitName))
+                {
+                    everyBookContext = everyBookContext.Where(o => o.DistributionUnit.Name.ToLower().Contains(distributionUnitName.ToLower()));
+                }
+                return View(await everyBookContext.ToListAsync());
+            }
+            if (!String.IsNullOrEmpty(userEmail) && !String.IsNullOrEmpty(distributionUnitName))
+            {
+                var everyBookContext = orders.Where(o => o.ExtendUser.Email == userEmail && o.DistributionUnit.Name.ToLower().Contains(distributionUnitName.ToLower()));
+                return View(await everyBookContext.ToListAsync());
+            }
+            if (!String.IsNullOrEmpty(userEmail))
+            {
+                var everyBookContext = orders.Where(o => o.ExtendUser.Email == userEmail);
+                return View(await everyBookContext.ToListAsync());
+            }
+            if (!String.IsNullOrEmpty(distributionUnitName))
+            {
+                var everyBookContext = orders.Where(o => o.DistributionUnit.Name.ToLower().Contains(distributionUnitName.ToLower()));
                 return View(await everyBookContext.ToListAsync());
             }
             return View(await orders.ToListAsync());
@@ -93,7 +113,9 @@ namespace EveryBook.Controllers
                 List<Book> books = new List<Book>();
                 for (int i = 0; i < booksInOrder.Count; i++)
                 {
-                    books.Add(_context.Book.Include(b => b.Genre).Where(b => b.Id == booksInOrder[i].Id).FirstOrDefault());
+                    var book = _context.Book.Include(b => b.Genre).Where(b => b.Id == booksInOrder[i].Id).FirstOrDefault();
+                    book.AvailableQuantity--;
+                    books.Add(book);
                 }
                 order.Books = books;
                 order.DistributionUnit = _context.DistributionUnit.Where(d => d.Id == order.DistributionUnitId).FirstOrDefault();
