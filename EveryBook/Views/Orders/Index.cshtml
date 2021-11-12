@@ -26,7 +26,7 @@
 <form class="form-inline">
     @if (SignInManager.IsSignedIn(User) && UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
     {
-        <input class="form-control mr-sm-2" type="text" id="UserName" name="UserName" placeholder="User Name">
+        <input class="form-control mr-sm-2" type="text" id="UserEmail" name="UserEmail" placeholder="User Email">
     }
     <input class="form-control mr-sm-2" type="text" id="PickUpLocation" name="PickUpLocation" placeholder="Pick up location">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
