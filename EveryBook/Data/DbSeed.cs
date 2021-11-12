@@ -127,12 +127,12 @@ namespace EveryBook.Data
             {
                 context.DistributionUnit.Add(new DistributionUnit()
                 {
-                    Name = "Azrieli Holon Mall",
+                    Name = "Azriei Holon Mall",
                     Location = location1
                 }); ;
                 context.DistributionUnit.Add(new DistributionUnit()
                 {
-                    Name = "Azrieli Tower",
+                    Name = "Azriei Tower",
                     Location = location2
                 });
                 context.DistributionUnit.Add(new DistributionUnit()
@@ -142,14 +142,14 @@ namespace EveryBook.Data
                 });
                 context.DistributionUnit.Add(new DistributionUnit()
                 {
-                    Name = "Azrieli Modiin Mall",
+                    Name = "Azriei Modiin Mall",
                     Location = location4
                 });
             }
 
             var adminUser = new ExtendUser()
             {
-                Name = "Dor Eliyahu",
+                Name = "Admin",
                 Email = "aa@aa.aa",
                 UserName = "aa@aa.aa"
             };

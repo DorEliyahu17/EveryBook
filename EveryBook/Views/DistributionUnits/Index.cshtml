@@ -30,19 +30,22 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Location.Address</td>
-                <th scope="row">
-                    <form style="text-align: center;">
-                        <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
-                        <a class="btn btn-secondary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
-                        <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
-                    </form>
-                </th>
-                <td style="text-align:center;">
-                </td>
-            </tr>
-        }
-    </tbody>
+            @if (!(item.IsDeleted))
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Location.Address</td>
+                    <th scope="row">
+                        <form style="text-align: center;">
+                            <a class="btn btn-primary" style="padding: 1px 10px;" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
+                            <a class="btn btn-secondary" style="padding: 1px 10px;" asp-action="Details" asp-route-id="@item.Id"> Details </a>
+                            <a class="btn btn-danger" style="padding: 1px 10px;" asp-action="Delete" asp-route-id="@item.Id"> Delete </a>
+                        </form>
+                    </th>
+                    <td style="text-align:center;">
+                    </td>
+                </tr>
+             }
+         }
+        </tbody>
 </table>

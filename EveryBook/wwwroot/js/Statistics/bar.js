@@ -1,4 +1,4 @@
-﻿$.get(`/Books/MostPurGenre`, (data) => {
+﻿$.get(`/Books/BooksByGenre`, (data) => {
     // set the dimensions and margins of the graph
     var margin = { top: 30, right: 30, bottom: 70, left: 60 },
         width = 460 - margin.left - margin.right,

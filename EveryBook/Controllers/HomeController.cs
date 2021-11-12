@@ -35,6 +35,7 @@ namespace EveryBook.Controllers
                                     join b in _context.Book on false equals b.IsDeleted
                                     where o.Books.Contains(b)
                                     group b by b.Name into bo
+                                    orderby bo.Count() descending
                                     select new { Value = bo.Count(), Name = bo.Key }).ToArray(); 
             if(mostPopularBooks.Length > 0)
             {

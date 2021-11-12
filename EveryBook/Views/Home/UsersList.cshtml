@@ -37,12 +37,15 @@
                 <td style="text-align:center;">
                     @if (UserManager.IsInRoleAsync(UserManager.FindByEmailAsync(item.Email).Result, "Admin").Result)
                     {
-                        <div class="row text-center">
-                            <form asp-action="ChangeRole" asp-route-id="@item.Id" method="post">
-                                <input type="hidden" name="Id" value="@item.Id" />
-                                <input type="submit" class="btn btn-outline-warning" style="padding: 1px 10px;margin-right: 5px;" value="Demote To User" />
-                            </form>
-                        </div>
+                        if (UserManager.FindByEmailAsync(item.Email).Result.Id != (UserManager.GetUserAsync(User).Result.Id))
+                        {
+                            <div class="row text-center">
+                                <form asp-action="ChangeRole" asp-route-id="@item.Id" method="post">
+                                    <input type="hidden" name="Id" value="@item.Id" />
+                                    <input type="submit" class="btn btn-outline-warning" style="padding: 1px 10px;margin-right: 5px;" value="Demote To User" />
+                                </form>
+                            </div>
+                        }
                     }
                     else
                     {

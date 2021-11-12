@@ -48,7 +48,7 @@ namespace EveryBook.Controllers
         // GET: DistributionUnits/Create
         public IActionResult Create()
         {
-            ViewData["LocationId"] = new SelectList(_context.Location, "Id", "Address");
+            ViewData["LocationId"] = new SelectList(_context.Location.Where(l => l.IsDeleted == false ), "Id", "Address");
             return View();
         }
 
@@ -71,7 +71,10 @@ namespace EveryBook.Controllers
                     isalreadyCreated.IsDeleted = false;
                     _context.Update(isalreadyCreated);
                 }
-                _context.Add(distributionUnit);
+                else
+                {
+                    _context.Add(distributionUnit);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
