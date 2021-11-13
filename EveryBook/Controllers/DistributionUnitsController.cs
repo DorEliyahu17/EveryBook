@@ -48,7 +48,31 @@ namespace EveryBook.Controllers
         // GET: DistributionUnits/Create
         public IActionResult Create()
         {
-            ViewData["LocationId"] = new SelectList(_context.Location.Where(l => l.IsDeleted == false ), "Id", "Address");
+            var DistributionUnits = _context.DistributionUnit.Include(d => d.Location).Where(d => d.IsDeleted == false).ToList();
+            var locaions = _context.Location.Where(l => l.IsDeleted == false).ToList();
+            var removeLocationsAddresses = new List<string> { };
+            for (var i = 0; i < locaions.Count; i++)
+            {
+                bool alreadyCreated = false;
+                for (var j = 0; j < DistributionUnits.Count; j++)
+                {
+                    if (DistributionUnits[j].LocationId == locaions[i].Id)
+                    {
+                        alreadyCreated = true;
+                    }
+                }
+                if (alreadyCreated)
+                {
+                    removeLocationsAddresses.Add(locaions[i].Address);
+                }
+            }
+            foreach (var addressToRemove in removeLocationsAddresses)
+            {
+                var indexToRemove = locaions.FindIndex(l => l.Address == addressToRemove);
+                locaions.RemoveAt(indexToRemove);
+            }
+            ViewData["LocationId"] = new SelectList(locaions, "Id", "Address");
+            //ViewData["LocationId"] = new SelectList(_context.Location.Where(l => l.IsDeleted == false ), "Id", "Address");
             return View();
         }
 

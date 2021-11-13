@@ -68,7 +68,7 @@ namespace EveryBook.Controllers
         // GET: Home/About
         public IActionResult About()
         {
-            IEnumerable<DistributionUnit> everyBookContext = _context.DistributionUnit.Include(s => s.Location);
+            IEnumerable<DistributionUnit> everyBookContext = _context.DistributionUnit.Include(ds => ds.Location).Where(ds => ds.IsDeleted == false);
 
             return View(everyBookContext);
         }
