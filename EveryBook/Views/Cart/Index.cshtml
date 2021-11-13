@@ -29,11 +29,15 @@
                                             <img class="card-img-top" src=@item.PictureUrl width="200" height="170">
                                             <h4 class="fw-bold card-title">@item.Name</h4>
                                             <h6 class="text-danger card-title">@item.Price$</h6>
-                                            <p class="card-text">@item.Description</p>
-                                            <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
-                                            <form asp-action="RemoveFromCart" asp-route-id="@item.Id" method="post">
-                                                <input type="submit" value="Remove" class="btn btn-danger" />
-                                            </form>
+                                            <div style="max-height: 198px; overflow: hidden;">
+                                                <p class="card-text">@item.Description</p>
+                                            </div>
+                                            <div class="row" style="justify-content: center;">
+                                                <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" style="margin-right: 10px;">Details</a>
+                                                <form asp-action="RemoveFromCart" asp-route-id="@item.Id" method="post">
+                                                    <input type="submit" value="Remove" class="btn btn-danger" />
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

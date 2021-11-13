@@ -16,8 +16,6 @@ namespace EveryBook.Data
 
         public DbSet<Order> Order { get; set; }
 
-        public DbSet<Report> Report { get; set; }
-
         public DbSet<Bug> Bug { get; set; }
 
         public DbSet<Location> Location { get; set; }

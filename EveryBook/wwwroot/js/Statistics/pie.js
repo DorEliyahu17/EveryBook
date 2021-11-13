@@ -59,4 +59,5 @@
         .attr("transform", function (d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
         .style("text-anchor", "middle")
         .style("font-size", 17)
+        .style("white-space", "break-spaces")
 });
